@@ -1,0 +1,112 @@
+{% extends '../base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+
+{% block title %}Кабинет Агента{% endblock%}
+{% block head_page %}
+
+{% endblock%}
+
+{% block content %}
+
+    {% if error_message %}
+          <div class="alert alert-primary" role="alert">
+            {{error_message}}
+          </div>
+    {% endif %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h3 class="mt-2">Профиль Агента</h3>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <!-- условие -->
+                {% if user_is_admin %}
+
+                    <form action="{% url 'clients:profile' object.pk %}" method="post" class="form">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+
+
+                        <div class="py-5 d-flex justify-content-end">
+                            {% bootstrap_button button_type="submit" content="Сохранить" %}
+                        </div>
+
+                    </form>
+
+                {% else %}
+
+                    <div class="row">
+                        <div class="col-6">
+                            <!-- card one -->
+                            <div class="card shadow">
+                                <div class="card-body py-4">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <p class="fw-bold">ИНН:</p>
+                                        </div>
+                                        <div class="col-9">
+                                            <p>{{ agent.inn|safe }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <p class="fw-bold">Наименование:</p>
+                                        </div>
+                                        <div class="col-9">
+                                            <p>{{ agent.name|safe }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <p class="fw-bold">Телефон:</p>
+                                        </div>
+                                        <div class="col-9">
+                                            <p>{{ agent.phone|safe }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <p class="fw-bold">Email:</p>
+                                        </div>
+                                        <div class="col-9">
+                                            <p>{{ agent.email|safe }}</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!-- card two -->
+                            <div class="card shadow">
+                                <div class="card-body py-4">
+                                    <h5 class="card-title">Продукты</h5>
+                                    <select name="products" id="id_products" multiple="">
+                                        {% for product in products %}
+                                            <option value="{{ product.id|safe }}">{{ product.name|safe }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="{% static 'js/clients_profile.js' %}"></script>
+
+{% endblock %}

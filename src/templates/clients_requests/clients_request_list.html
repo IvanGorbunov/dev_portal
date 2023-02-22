@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row mt-4 mb-4">
+    <div class="row">
+        {% if error_message %}
+          <div class="alert alert-primary" role="alert">
+            {{error_message}}
+          </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col">
+            <h3 class="mt-2">{{ title }}</h3>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <form action="{% url 'clients_requests:list' %}" class="navbar-form navbar-left" method="get">
+
+            <div class="input-group">
+
+            <div class="col-2">
+                <a class="btn btn-primary" href="{% url 'clients_requests:clients-request-add' %}" role="button" style="background-color: #828282; color: #ffffff;">Создать заявку</a>
+            </div>
+
+                <div class="col-2">
+                    <input name="date" type="text" class="form-control" id="exampleDatepicker1" placeholder="Дата заявки">
+                </div>
+                <div class="col-2">
+                    <input name="status" type="text" id="disabledTextInput" class="form-control" placeholder="Статус">
+                </div>
+                <div class="col-2">
+                    <input name="product" type="text" id="disabledTextInput" class="form-control" placeholder="Продукт">
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary" style="background-color: #828282; color: #ffffff;"><i class="bi bi-search"></i> Поиск </a></button>
+                </div>
+
+            <div class="col-2">
+                <a class="btn btn-primary" href="{% url 'clients_requests:clients-request-export-xlsx' %}" role="button" style="background-color: #828282; color: #ffffff;"><i class="bi bi-file-earmark-spreadsheet"></i> Выгрузить в Excel </a>
+            </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+  <div class="row">
+
+    <div class="col-12">
+      <div class="table-responsive mt-2">
+        <table class="table table-striped table table-hover table-bordered border-primary">
+          <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Дата</th>
+                <th scope="col">Контрагент</th>
+                <th scope="col">ИНН</th>
+                <th scope="col">Продукт</th>
+                <th scope="col">Заявка</th>
+                <th scope="col">Телефон</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Статус</th>
+            </tr>
+          </thead>
+          {% if user.is_authenticated %}
+          <tbody>
+            {% for agents_request in agents_requests %}
+            <tr>
+                <td>
+                {% if agents_request.is_delete %}
+                    <i class="bi bi-x-square"></i>
+                {% else %}
+                    <i class="bi bi-check-square"></i>
+                {% endif %}
+                    <a href="{% url 'clients_requests:clients-request-update' agents_request.id %}"> {{agents_request.id|safe}}</a>
+                </td>
+                <td>{{ agents_request.create_dt|date:"d.m.Y H:i:s" }}</td>
+                <td>{{ agents_request.agent_name|safe }}</td>
+                <td>{{ agents_request.inn|safe }}</td>
+                <td>{{ agents_request.product_name|safe }}</td>
+                <td>{{ agents_request.title|safe }}</td>
+                <td>{{ agents_request.phone|safe }}</td>
+                <td>{{ agents_request.email|safe }}</td>
+                <td>{{ agents_request.status|safe }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          {% endif %}
+        </table>
+
+        <span class="current">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        <nav aria-label="Page navigation example">
+            {% if is_paginated %}
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{page_obj.previous_page_number}}">&laquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">&laquo;</a>
+                        </li>
+                    {% endif %}
+
+                    {% for i in paginator.page_range %}
+                        {% if page_obj.number == i %}
+                            <li class="page-item">
+                                <a class="page-link active">{{ i }}</a>
+                            </li>
+                        {% elif i >= page_obj.number|add:-5 and i <= page_obj.number|add:5  %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a href="?page={{page_obj.next_page_number}}" class="page-link">&raquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link">&raquo;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </nav>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

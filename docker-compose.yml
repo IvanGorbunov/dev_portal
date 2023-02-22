@@ -1,0 +1,102 @@
+version: "3.9"
+services:
+
+  # Redis
+  redis:
+    image: redis:alpine
+    container_name: clients_portal_redis
+    ports:
+      - 6385:6379
+
+  # Database Postgres
+  db:
+    image: postgres
+    restart: always
+    command:
+      - "postgres"
+      - "-c"
+      - "max_connections=50"
+      - "-c"
+      - "shared_buffers=1GB"
+      - "-c"
+      - "effective_cache_size=4GB"
+      - "-c"
+      - "work_mem=16MB"
+      - "-c"
+      - "maintenance_work_mem=512MB"
+      - "-c"
+      - "random_page_cost=1.1"
+      - "-c"
+      - "temp_file_limit=10GB"
+      - "-c"
+      - "log_min_duration_statement=200ms"
+      - "-c"
+      - "idle_in_transaction_session_timeout=10s"
+      - "-c"
+      - "lock_timeout=1s"
+      - "-c"
+      - "statement_timeout=60s"
+      - "-c"
+      - "shared_preload_libraries=pg_stat_statements"
+      - "-c"
+      - "pg_stat_statements.max=10000"
+      - "-c"
+      - "pg_stat_statements.track=all"
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=clients_portal
+    ports:
+      - ${POSTGRES_PORT:-5436}:5432
+    container_name: clients_portal_postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d clients_portal" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4G
+
+  # Django App
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./:/clients_portal
+      - ./logs:/clients_portal/logs/
+      - ./src/static:/clients_portal/src/static/
+      - ./src/media:/clients_portal/src/media/
+    ports:
+      - 8025:8025
+    links:
+      - db
+#      - celery
+    image: app:django
+    container_name: clients_portal_web
+    command: >
+      sh -c "./wait-for-it.sh db:5432 -- sh ./entrypoint-web.sh"
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+  # Celery
+  celery:
+    restart: always
+    build:
+      context: .
+#    command: celery -A clients_portal worker -l INFO
+    volumes:
+      - .:/clients_portal
+    container_name: clients_portal_celery
+    depends_on:
+      - db
+      - redis
+      - web

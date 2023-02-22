@@ -1,0 +1,33 @@
+.main {
+    padding-top: 300px;
+}
+
+:root {
+    --color1: #f3e7f2;
+    --color2: #f6f0d7;
+    
+  }
+
+.shadow {
+
+}
+
+.nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    /*font-size: var(--bs-nav-link-font-size);*/
+    /*font-weight: var(--bs-nav-link-font-weight);*/
+    color: #0d6efd;
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
+
+@font-face {
+   font-family: logoFont;
+   src: url(../fonts/Calculator.ttf);
+}
+
+.logo-font {
+   font-family: logoFont;
+   color: darkgrey;
+}

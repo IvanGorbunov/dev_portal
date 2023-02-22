@@ -1,0 +1,85 @@
+# name of our workflow
+name: Django CI/CD Workflow
+
+# triggers for our workflow
+on:
+  # opening a pull request
+  pull_request:
+    branches:
+      - '**'
+  # any code pushed
+  push:
+    branches:
+      - '**'
+
+# three job definition
+jobs:
+  health-check-job: # health check job for testing and code formatting check
+    runs-on: ubuntu-latest # os for running the job
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: localhost # default host value for the database
+      POSTGRES_DB: clients_portal
+      POSTGRES_PORT: 5432
+      DJANGO_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+    services:
+      postgres_main:
+        image: postgres
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 5
+    steps:
+      - name: Checkout code # checking our the code at current commit that triggers the workflow
+        uses: actions/checkout@v2
+      - name: Cache dependency # caching dependency will make our build faster.
+        uses: actions/cache@v2 # for more info checkout pip section documentation at https://github.com/actions/cache
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Setup python environment # setting python environment to 3.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10' # if you want multiple python version run just use matrix strategy in job config. See the documentation of GitHub Actions
+      - name: Check Python version # checking the python version to see if 3.x is installed.
+        run: python --version
+      - name: Upgrade Pip # check and upgrade Pip
+        run: python -m pip install --upgrade pip
+      - name: Install requirements # install application requirements
+        run: pip install -r requirements.txt
+      - name: Check Syntax # check code formatting
+        run: |
+          pip install pycodestyle
+          pycodestyle --statistics --max-line-length=500 .
+
+      - name: Checking hierarchy
+        run: |
+          sudo apt install tree
+          tree -L 3
+
+      - name: Run Migrations and Tests # run migrations to create table in side car db container
+        env:
+          DEBUG: True
+          DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }}
+          DJANGO_ALLOWED_HOSTS: '*'
+          STATIC_ROOT: var/www/staticfiles
+          SQL_ENGINE: django.db.backends.postgresql
+          SQL_USER: ${{ env.POSTGRES_USER }}
+          SQL_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          SQL_HOST: ${{ env.POSTGRES_HOST }}
+          SQL_DATABASE: ${{ env.POSTGRES_DB }}
+          SQL_PORT: ${{ env.POSTGRES_PORT }}
+          CELERY_ACCEPT_CONTENT: 'application/json'
+        run: |
+          cd ./src
+          python manage.py test

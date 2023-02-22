@@ -1,0 +1,47 @@
+{% extends '../base.html' %}
+
+{% load django_bootstrap5 %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Кабинет Агента{% endblock%}
+
+{% block content %}
+
+    {% if error_message %}
+          <div class="alert alert-primary" role="alert">
+            {{error_message}}
+          </div>
+    {% endif %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+    <h3 class="mt-2">{% if clients_request.id|safe %}Заявка № {{ clients_request.id|safe }}{% else %}Новая заявка{% endif %}</h3>
+  </div>
+</div>
+    <hr>
+
+    <form action="" method="post" novalidate enctype="multipart/form-data">
+    <div class="row">
+        {% csrf_token %}
+        {% if user_is_admin %}
+            {% bootstrap_form form %}
+        {% else %}
+            {% bootstrap_form form exclude='status,is_delete' %}
+        {% endif %}
+
+        <div class="">
+            {% for attachment in attachments %}
+                <p><span id="receipt_url"><a href="{{ attachment.file.url|safe }}"> {{ attachment.name|safe }} </a></span></p>
+            {% endfor %}
+        </div>
+      <div class="py-5 d-flex justify-content-end">
+          {% bootstrap_button button_type="submit" content="Сохранить" %}
+    </div>
+    </form>
+  </div>
+  </div>
+  </div>
+
+{% endblock %}

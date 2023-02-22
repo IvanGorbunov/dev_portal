@@ -1,0 +1,41 @@
+body {
+    background-color: #f8f9fa;
+}
+
+/* :root {
+    --color1: #828282;
+    --color2: #ffffff;
+}
+
+.fiolet {
+    background-color: var(--color1);
+}
+
+.white {
+    color:var(--color2)
+} */
+
+.padding-for-navbars-button {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  padding: 48px 0 0;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+@font-face {
+   font-family: logoFont;
+   src: url(../fonts/Calculator.ttf);
+}
+
+.logo-font {
+   font-family: logoFont;
+   color: darkgrey;
+}

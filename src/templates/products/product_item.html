@@ -1,0 +1,26 @@
+{% extends '../base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block title %}Продукт{% endblock%}
+
+{% block content %}
+
+    {% if error_message %}
+          <div class="alert alert-primary" role="alert">
+            {{error_message}}
+          </div>
+    {% endif %}
+
+    <h1>Продукт</h1>
+    <hr>
+
+    <form action="{% url 'products:product-update' object.pk %}" method="post" novalidate>
+      {% csrf_token %}
+      {% bootstrap_form form %}
+        {% if user_is_admin %}
+        {% bootstrap_button button_type="submit" content="Сохранить" %}
+        {% endif %}
+    </form>
+
+{% endblock %}
