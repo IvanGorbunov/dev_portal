@@ -229,6 +229,16 @@ EMAIL_ADR_REGISTRATION = env.str('EMAIL_ADR_REGISTRATION', None)
 # region Redis
 REDIS_HOST = env.str('REDIS_HOST', 'redis')
 REDIS_PORT = env.str('REDIS_PORT', '6379')
+
+CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0',
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            },
+        }
+}
 # endregion
 
 # region Celery
