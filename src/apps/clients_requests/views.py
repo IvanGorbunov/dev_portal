@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 from apps.clients_requests.choices import StatusClientsRequest
 from apps.clients_requests.excel import ExportClientsRequest
-from apps.clients_requests.forms import ClientsRequestItemForm
+from apps.clients_requests.forms import ClientsRequestItemForm, ClientsRequestItemAdminForm
 from apps.clients_requests.models import ClientsRequest, ClientsRequestAttachment
 from apps.users.choices import UserRole
 from utils.views import DataMixin, ContextDataMixin, MultiSerializerViewSet
@@ -66,10 +66,10 @@ class ClientsRequestsList(LoginRequiredMixin, DataMixin, ContextDataMixin, Clien
 
 
 class ClientsRequestCreateView(LoginRequiredMixin, ContextDataMixin, CreateView):
+    model = ClientsRequest
+    form_class = ClientsRequestItemForm
     template_name = 'clients_requests/clients_request_item.html'
     success_url = reverse_lazy('clients_requests:list')
-    model = ClientsRequest
-    fields = '__all__'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -77,12 +77,28 @@ class ClientsRequestCreateView(LoginRequiredMixin, ContextDataMixin, CreateView)
         c_def['exclude'] = ''
         return dict(list(context.items()) + list(c_def.items()))
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if self.request.user.is_role_agent():
+            kwargs['user'] = self.request.user
+        return kwargs
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_role_staff_or_admin():
+            self.form_class = ClientsRequestItemAdminForm
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        if self.request.user.is_role_staff_or_admin():
+            self.form_class = ClientsRequestItemAdminForm
+        return super().post(request, *args, **kwargs)
+
 
 class ClientsRequestUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
+    model = ClientsRequest
     form_class = ClientsRequestItemForm
     template_name = 'clients_requests/clients_request_item.html'
     success_url = reverse_lazy('clients_requests:list')
-    model = ClientsRequest
     context_object_name = 'clients_request'
 
     def get_queryset(self):
@@ -97,11 +113,27 @@ class ClientsRequestUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView)
         c_def['attachments'] = context['clients_request'].attachments.all()
         return dict(list(context.items()) + list(c_def.items()))
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if self.request.user.is_role_agent():
+            kwargs['user'] = self.request.user
+        return kwargs
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_role_staff_or_admin():
+            self.form_class = ClientsRequestItemAdminForm
+        return super().get(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         if request.user.is_role_agent() and request.POST.get('status') != StatusClientsRequest.NEW:
             return render(request, 'not_allowed.html')
 
-        form = ClientsRequestItemForm(request.POST, request.FILES)
+        if self.request.user.is_role_staff_or_admin():
+            self.form_class = ClientsRequestItemAdminForm
+            form = ClientsRequestItemAdminForm(request.POST, request.FILES)
+        else:
+            kwargs['user'] = self.request.user
+            form = ClientsRequestItemForm(request.POST, request.FILES, user=self.request.user)
         if form.is_valid():
             super().post(request, *args, **kwargs)
             clients_request = self.get_object()

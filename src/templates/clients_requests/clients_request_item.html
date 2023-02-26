@@ -25,11 +25,7 @@
     <form action="" method="post" novalidate enctype="multipart/form-data">
     <div class="row">
         {% csrf_token %}
-        {% if user_is_admin %}
-            {% bootstrap_form form %}
-        {% else %}
-            {% bootstrap_form form exclude='status,is_delete' %}
-        {% endif %}
+        {% bootstrap_form form %}
 
         <div class="">
             {% for attachment in attachments %}

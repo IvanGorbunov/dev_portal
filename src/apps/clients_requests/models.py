@@ -2,6 +2,7 @@ from django.db import models, transaction
 from datetime import datetime
 
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from apps.clients.models import Client
 from apps.clients_requests.choices import StatusClientsRequest, ClientsRequestAttachmentType
@@ -27,9 +28,15 @@ class ClientsRequest(models.Model):
     class Meta:
         verbose_name = _('Clients request')
         verbose_name_plural = _('Clients requests')
+        ordering = [
+            '-create_dt',
+        ]
 
     def __str__(self) -> str:
         return f'Clients request: {self.title} - {self.author}'
+
+    def get_absolute_url(self):
+        return reverse('clients_requests:clients-request-update', kwargs={'pk': self.pk})
 
     @transaction.atomic()
     def save(self, *args, **kwargs):

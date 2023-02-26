@@ -23,6 +23,9 @@ class Client(models.Model):
     class Meta:
         verbose_name = _('Client')
         verbose_name_plural = _('Clients')
+        ordering = [
+            '-id',
+        ]
 
     def __str__(self) -> str:
         return f'Client: {self.name} - {self.inn}'
