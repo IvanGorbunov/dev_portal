@@ -72,24 +72,24 @@
           </thead>
           {% if user.is_authenticated %}
           <tbody>
-            {% for agents_request in agents_requests %}
+            {% for clients_request in clients_requests %}
             <tr>
                 <td>
-                {% if agents_request.is_delete %}
+                {% if clients_request.is_delete %}
                     <i class="bi bi-x-square"></i>
                 {% else %}
                     <i class="bi bi-check-square"></i>
                 {% endif %}
-                    <a href="{% url 'clients_requests:clients-request-update' agents_request.id %}"> {{agents_request.id|safe}}</a>
+                    <a href="{% url 'clients_requests:clients-request-update' clients_request.id %}"> {{clients_request.id|safe}}</a>
                 </td>
-                <td>{{ agents_request.create_dt|date:"d.m.Y H:i:s" }}</td>
-                <td>{{ agents_request.agent_name|safe }}</td>
-                <td>{{ agents_request.inn|safe }}</td>
-                <td>{{ agents_request.product_name|safe }}</td>
-                <td>{{ agents_request.title|safe }}</td>
-                <td>{{ agents_request.phone|safe }}</td>
-                <td>{{ agents_request.email|safe }}</td>
-                <td>{{ agents_request.status|safe }}</td>
+                <td>{{ clients_request.create_dt|date:"d.m.Y H:i:s" }}</td>
+                <td>{{ clients_request.client_name|safe }}</td>
+                <td>{{ clients_request.inn|safe }}</td>
+                <td>{{ clients_request.product_name|safe }}</td>
+                <td>{{ clients_request.title|safe }}</td>
+                <td>{{ clients_request.phone|safe }}</td>
+                <td>{{ clients_request.email|safe }}</td>
+                <td>{{ clients_request.status|safe }}</td>
             </tr>
             {% endfor %}
           </tbody>

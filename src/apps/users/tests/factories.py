@@ -1,4 +1,4 @@
-
+from factory import PostGenerationMethodCall
 from factory.django import DjangoModelFactory
 from factory.fuzzy import FuzzyText
 
@@ -9,9 +9,11 @@ class UserFactory(DjangoModelFactory):
     """
     Фабрика Пользователя
     """
-    class Meta:
-        model = User
 
     username = FuzzyText(length=12)
-    email = FuzzyText(length=12, suffix='_a@yandex.ru')
+    password = PostGenerationMethodCall('set_password', 'adm1n')
+    email = FuzzyText(length=12, suffix='_a@example.com')
     fio = FuzzyText(length=25)
+
+    class Meta:
+        model = User

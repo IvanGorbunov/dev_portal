@@ -42,7 +42,7 @@ class ContextDataMixin(ContextMixin):
 
     def get_default_context_data(self, *args, **kwargs):
         client_pk = None
-        if self.request.user.is_role_agent():
+        if self.request.user.is_role_client():
             client_pk = Client.objects.filter(user=self.request.user).values('id')
             if client_pk:
                 client_pk = client_pk[0]['id']

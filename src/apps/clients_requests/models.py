@@ -2,6 +2,7 @@ from django.db import models, transaction
 from datetime import datetime
 
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from apps.clients.models import Client
 from apps.clients_requests.choices import StatusClientsRequest, ClientsRequestAttachmentType
@@ -27,9 +28,15 @@ class ClientsRequest(models.Model):
     class Meta:
         verbose_name = _('Clients request')
         verbose_name_plural = _('Clients requests')
+        ordering = [
+            '-create_dt',
+        ]
 
     def __str__(self) -> str:
         return f'Clients request: {self.title} - {self.author}'
+
+    def get_absolute_url(self):
+        return reverse('clients_requests:clients-request-update', kwargs={'pk': self.pk})
 
     @transaction.atomic()
     def save(self, *args, **kwargs):
@@ -46,7 +53,7 @@ class ClientsRequest(models.Model):
 
 class ClientsRequestHistory(models.Model):
     """ История изменения заявки"""
-    clients_request = models.ForeignKey('ClientsRequest', verbose_name=_('Agent'), related_name='agent', on_delete=models.CASCADE)
+    clients_request = models.ForeignKey('ClientsRequest', verbose_name=_('client'), related_name='client', on_delete=models.CASCADE)
     date = models.DateTimeField(_('Update date'), auto_now_add=True)
     status = models.CharField(_('Status'), max_length=20, choices=StatusClientsRequest.CHOICES, default=StatusClientsRequest.NEW)
     user = models.ForeignKey(User, verbose_name=_('User'), related_name='clients_requests_history_users', on_delete=models.PROTECT, null=True)

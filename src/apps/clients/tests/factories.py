@@ -9,7 +9,7 @@ from apps.users.tests.factories import UserFactory
 
 class ClientFactory(DjangoModelFactory):
     """
-    Фабрика Агента
+    Фабрика Клиента
     """
     class Meta:
         model = Client
