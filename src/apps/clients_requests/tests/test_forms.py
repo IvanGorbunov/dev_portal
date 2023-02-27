@@ -10,7 +10,7 @@ from apps.users.tests.factories import UserFactory
 from utils.tests import CustomViewTestCase
 
 
-class AgentsRequestItemFormTest(CustomViewTestCase):
+class ClientsRequestItemFormTest(CustomViewTestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -51,4 +51,4 @@ class AgentsRequestItemFormTest(CustomViewTestCase):
         self.assertTrue('author' in form.fields)
         self.assertTrue(form.fields['author'].widget.is_hidden)
         self.assertFalse(form.fields['author'].show_hidden_initial)
-        self.assertEqual(form.fields['author'].initial, self.agent_1)
+        self.assertEqual(form.fields['author'].initial, self.client_1)

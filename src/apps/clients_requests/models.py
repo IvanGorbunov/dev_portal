@@ -53,7 +53,7 @@ class ClientsRequest(models.Model):
 
 class ClientsRequestHistory(models.Model):
     """ История изменения заявки"""
-    clients_request = models.ForeignKey('ClientsRequest', verbose_name=_('Agent'), related_name='agent', on_delete=models.CASCADE)
+    clients_request = models.ForeignKey('ClientsRequest', verbose_name=_('client'), related_name='client', on_delete=models.CASCADE)
     date = models.DateTimeField(_('Update date'), auto_now_add=True)
     status = models.CharField(_('Status'), max_length=20, choices=StatusClientsRequest.CHOICES, default=StatusClientsRequest.NEW)
     user = models.ForeignKey(User, verbose_name=_('User'), related_name='clients_requests_history_users', on_delete=models.PROTECT, null=True)

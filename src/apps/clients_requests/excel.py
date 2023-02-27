@@ -8,7 +8,7 @@ class ExportClientsRequest:
 
     def export_to_excel(self, data):
         """
-        Export list of agent`s request
+        Export list of client`s request
         """
 
         status = dict(StatusClientsRequest.CHOICES)
@@ -19,7 +19,7 @@ class ExportClientsRequest:
         headers, fields_call = zip(
             ('ID', lambda item: item.id),
             ('Заголовок', lambda item: item.title),
-            ('Контрагент', lambda item: item.agent_name),
+            ('Контрагент', lambda item: item.client_name),
             ('ИНН', lambda item: item.inn),
             ('Телефон', lambda item: item.phone),
             ('E-mail', lambda item: item.email),

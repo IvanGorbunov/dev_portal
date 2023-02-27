@@ -48,8 +48,8 @@
                 <td>{{ current_user.email|safe }}</td>
                 <td>{{ current_user.role|safe }}</td>
                 <td>
-                    {% if current_user.agent_id %}
-                        <a href="{% url 'clients:profile' current_user.agent_id %}"> {{current_user.agent_name|safe}}</a>
+                    {% if current_user.client_id %}
+                        <a href="{% url 'clients:profile' current_user.client_id %}"> {{current_user.client_name|safe}}</a>
                     {% endif %}
                 </td>
             </tr>

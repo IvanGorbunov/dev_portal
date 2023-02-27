@@ -5,7 +5,7 @@ from apps.products.models import Product
 
 
 @admin.register(Product)
-class AgentAdmin(ModelAdmin):
+class clientAdmin(ModelAdmin):
     list_display = (
         'id',
         'name',

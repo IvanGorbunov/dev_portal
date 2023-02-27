@@ -28,7 +28,7 @@ class ClientsRequestsListMixin:
         qs = super().get_queryset()
         if not request.user.is_role_staff_or_admin():
             qs = qs.filter(author__user=request.user)
-        qs = qs.annotate(agent_name=F('author__name'))
+        qs = qs.annotate(client_name=F('author__name'))
         qs = qs.annotate(inn=F('author__inn'))
         qs = qs.annotate(clients_phone=F('author__phone'))
         qs = qs.annotate(clients_email=F('author__email'))
@@ -79,7 +79,7 @@ class ClientsRequestCreateView(LoginRequiredMixin, ContextDataMixin, CreateView)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        if self.request.user.is_role_agent():
+        if self.request.user.is_role_client():
             kwargs['user'] = self.request.user
         return kwargs
 
@@ -115,7 +115,7 @@ class ClientsRequestUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        if self.request.user.is_role_agent():
+        if self.request.user.is_role_client():
             kwargs['user'] = self.request.user
         return kwargs
 
@@ -125,7 +125,7 @@ class ClientsRequestUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView)
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        if request.user.is_role_agent() and request.POST.get('status') != StatusClientsRequest.NEW:
+        if request.user.is_role_client() and request.POST.get('status') != StatusClientsRequest.NEW:
             return render(request, 'not_allowed.html')
 
         if self.request.user.is_role_staff_or_admin():

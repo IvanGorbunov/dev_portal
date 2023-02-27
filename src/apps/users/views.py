@@ -56,8 +56,8 @@ class UserListView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.annotate(agent_id=F('agent__id'))
-        qs = qs.annotate(agent_name=F('agent__name'))
+        qs = qs.annotate(client_id=F('client__id'))
+        qs = qs.annotate(client_name=F('client__name'))
         return qs
 
     def get_context_data(self, **kwargs):
@@ -93,8 +93,8 @@ class ClientListView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.annotate(agent_id=F('agent__id'))
-        qs = qs.annotate(agent_name=F('agent__name'))
+        qs = qs.annotate(client_id=F('client__id'))
+        qs = qs.annotate(client_name=F('client__name'))
         return qs
 
     def get_context_data(self, **kwargs):

@@ -10,7 +10,7 @@ from apps.users.tests.factories import UserFactory
 from utils.tests import CustomViewTestCase
 
 
-class AgentViewTest(CustomViewTestCase):
+class ClientViewTest(CustomViewTestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -21,7 +21,7 @@ class AgentViewTest(CustomViewTestCase):
                 role=UserRole.CLIENT,
                 is_staff=False,
             )
-        cls.agent_1 = ClientFactory(
+        cls.client_1 = ClientFactory(
             user=cls.user_client_1,
             inn='1234567890',
             name='ИП Иванов Иван Иванович',
@@ -34,7 +34,7 @@ class AgentViewTest(CustomViewTestCase):
             is_staff=True,
             is_active=True,
         )
-        cls.agents_request = ClientsRequestFactory(
+        cls.clients_request = ClientsRequestFactory(
             title='title1',
             content='content1',
             author=cls.client_1,
@@ -43,9 +43,9 @@ class AgentViewTest(CustomViewTestCase):
     @classmethod
     def setUpTestData(cls):
         # Create 33 clients for pagination tests
-        number_of_agents = 33
+        number_of_clients = 33
 
-        for client_id in range(number_of_agents):
+        for client_id in range(number_of_clients):
             ClientFactory(
                 inn=str(client_id).zfill(10),
                 name=client_id,
@@ -71,7 +71,7 @@ class AgentViewTest(CustomViewTestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_list_03_uses_correct_template(self):
-        response = self.client.get(reverse_lazy('client:list'))
+        response = self.client.get(reverse_lazy('clients:list'))
         response = self.client.get(response.url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'index.html')
@@ -80,6 +80,6 @@ class AgentViewTest(CustomViewTestCase):
 
         self.auth_user(self.user_admin)
 
-        response = self.client.get(reverse_lazy('client:list') + '?page=2')
+        response = self.client.get(reverse_lazy('clients:list') + '?page=2')
         response = self.client.get(response.url)
         self.assertEqual(response.status_code, 200)

@@ -10,7 +10,7 @@ from apps.users.tests.factories import UserFactory
 from utils.tests import CustomViewTestCase
 
 
-class AgentsRequestViewTest(CustomViewTestCase):
+class clientsRequestViewTest(CustomViewTestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -43,10 +43,10 @@ class AgentsRequestViewTest(CustomViewTestCase):
 
     @classmethod
     def setUpTestData(cls):
-        # Create agent`s requests for pagination tests
+        # Create client`s requests for pagination tests
         number_of_requests = 33
 
-        for agent_id in range(number_of_requests):
+        for client_id in range(number_of_requests):
             ClientsRequestFactory()
 
     def setUp(self) -> None:

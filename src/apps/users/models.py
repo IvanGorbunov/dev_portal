@@ -40,7 +40,7 @@ class User(AbstractUser):
         """Администратор портала"""
         return self.role == UserRole.ADMIN
 
-    def is_role_agent(self):
+    def is_role_client(self):
         """Клиент"""
         return self.role == UserRole.CLIENT
 
@@ -56,7 +56,7 @@ class User(AbstractUser):
 class ClientManager(BaseUserManager):
     def get_queryset(self):
         qs = super(ClientManager, self).get_queryset()
-        qs = qs.filter(role=UserRole.AGENT)
+        qs = qs.filter(role=UserRole.CLIENT)
         return qs
 
     def create_user(self, email, password=None):
