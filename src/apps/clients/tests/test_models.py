@@ -21,7 +21,7 @@ class TestModels(CustomViewTestCase):
                 role=UserRole.CLIENT,
                 is_staff=False,
             )
-        cls.client = ClientFactory(
+        cls.client_1 = ClientFactory(
             user=cls.user,
             inn='1234567890',
             name='ИП Иванов Иван Иванович'
@@ -59,8 +59,8 @@ class TestModels(CustomViewTestCase):
         self.assertEquals(history.values, values)
 
         # проверим установку нового статуса в истории
-        self.client.status = ClientsStatus.ACTIV
-        self.client.save()
+        self.client_1.status = ClientsStatus.ACTIV
+        self.client_1.save()
 
         new_values = {
             'user_id': client.user_id,
@@ -78,6 +78,6 @@ class TestModels(CustomViewTestCase):
         self.assertEquals(history.values, values)
 
     def test_client_delete(self):
-        self.client.destroy()
-        request = Client.objects.filter(pk=self.client.id).first()
+        self.client_1.destroy()
+        request = Client.objects.filter(pk=self.client_1.id).first()
         self.assertEquals(request.is_delete, True)

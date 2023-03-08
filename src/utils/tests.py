@@ -35,6 +35,9 @@ class WithLoginTestCase(TestCaseBase):
         if is_create:
             user.role = UserRole.SUPER_ADMIN
             user.set_password('admin')
+            user.is_superuser = True
+            user.is_staff = True
+            user.is_active = True
             user.save()
         cls.user = user
         super().setUpClass()

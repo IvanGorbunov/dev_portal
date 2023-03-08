@@ -37,6 +37,6 @@ class ProductUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def post(self, request, *args, **kwargs):
-        if request.user.is_role_agent():
+        if request.user.is_role_client():
             return render(request, 'not_allowed.html')
         return super().post(request, *args, **kwargs)

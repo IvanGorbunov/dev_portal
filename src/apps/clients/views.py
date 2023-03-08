@@ -27,7 +27,7 @@ class ClientsView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         c_def = super().get_default_context_data()
-        c_def['title'] = 'Список агентов'
+        c_def['title'] = 'Список клиентов'
         c_def['statuses'] = [{'id': val[0], 'val': val[1]} for val in ClientsStatus.CHOICES]
 
         return dict(list(context.items()) + list(c_def.items()))
@@ -35,7 +35,6 @@ class ClientsView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
 
 class ClientUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
     queryset = Client.objects.filter(is_delete=False)
-    # fields = '__all__'
     template_name = 'clients/clients_profile.html'
     success_url = reverse_lazy('clients:list')
     form_class = ClientCreationForm
@@ -77,8 +76,8 @@ class RegisterViewSet(View):
         if form.is_valid():
             form.save()
             if settings.EMAIL_ADR_REGISTRATION:
-                theme = 'Зарегистрирован новый клиент в системе "ЛК Агента"'
-                message = f'Зарегистрирован новый агент:\n' \
+                theme = 'Зарегистрирован новый клиент в системе "Портал разработки"'
+                message = f'Зарегистрирован новый клиент:\n' \
                           f'ИНН: {request.POST.get("inn")}\n' \
                           f'Организация: {request.POST.get("name")}\n' \
                           f'Телефон: {request.POST.get("phone")}\n' \

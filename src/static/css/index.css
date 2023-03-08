@@ -28,6 +28,7 @@
 }
 
 .logo-font {
-   font-family: logoFont;
-   color: darkgrey;
+    font-family: logoFont;
+    color: #828282;
+    text-shadow: darkgrey;
 }

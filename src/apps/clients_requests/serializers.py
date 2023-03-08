@@ -11,12 +11,15 @@ class StatusDetailSerializer(serializers.ModelSerializer):
 
 
 class ClientsRequestListSerializer(serializers.ModelSerializer):
-    agent_name = serializers.CharField()
+    client_name = serializers.CharField()
     inn = serializers.CharField()
     phone = serializers.CharField()
     email = serializers.EmailField()
     product_name = serializers.CharField()
     status = StatusDetailSerializer()
+
+    create_dt = serializers.SerializerMethodField()
+    update_dt = serializers.SerializerMethodField()
 
     class Meta:
         model = ClientsRequest
@@ -31,12 +34,18 @@ class ClientsRequestListSerializer(serializers.ModelSerializer):
             'product',
             'is_delete',
 
-            'agent_name',
+            'client_name',
             'inn',
             'phone',
             'email',
             'product_name',
         )
+
+    def get_create_dt(self, clients_request: ClientsRequest):
+        return clients_request.create_dt.strftime("%d.%m.%Y %H:%M:%S")
+
+    def get_update_dt(self, clients_request: ClientsRequest):
+        return clients_request.update_dt.strftime("%d.%m.%Y %H:%M:%S")
 
 
 class ClientsRequestDetailSerializer(AuthorMixin, serializers.ModelSerializer):
