@@ -1,20 +1,30 @@
-# Портал заявок для клиентов
+# Software Development Process Management System
 
-Портал представляет собой сервис для облегчения разрабоки программного обеспечения нескольким командам разработчиков.
+---
+The project is a website designed to facilitate the process of software development. The system provides for the registration of user requests for feedback on the operation of the software.
 
-## Установка и запуск:
+Features:
+ - [x] users requests
+ - [ ] kanban board
+ - [ ] profile of the project
+ - [ ] profile of the developers
+ - [ ] chat
+ - [ ] wiki for projects
 
-1. Клонировать репозиторий:
+---
+### Installation:
+
+1. Clone the repository:
    
     ```bash
-   git clone ...
+   git clone https://github.com/IvanGorbunov/dev_portal.git
    ```
    
-1. Создать и заполнить файл`.env` по шаблону `/src/settings/.env.template`. Файл`.env` дожен находится в одной директории с `settings.py`.
+2. Create and fill up a `.env` file according to the template `/src/settings/.env.template`. The `.env` file must be in the same directory as `settings.py`.
 
-   Переменные для заполнения:
+   Variables to fill:
    
-   - для запуска локально:
+   - for local run (will be use SQLite database):
       ```
       DEBUG=False
       SQL_DEBUG=False
@@ -35,7 +45,7 @@
       SENTRY_DSN=
       ```
       
-   - для запуска в контейнере `Docker`:
+   - for run in container `Docker` (will be use SQLite PostgreSQL):
       ```
       DEBUG=False
       SQL_DEBUG=False
@@ -73,55 +83,44 @@
       SENTRY_DSN=
       ```
 
-1. Установить витуальное окружение для проекта `venv` в директории проекта:
-    
-   ```bash
-   python3 -m venv venv
-   ```
-   
-1. Активировать виртуальное окружение:
-
-   - для Linux: 
-       ```bash
-       source venv/bin/activate
-       ```
-   - для Windows:
-       ```bash
-       .\venv\Scripts\activate.ps1
-       ```
-     
-1. Установить зависимости из `requirements.txt`:
+3. Install all necessary package from `requirements.txt`:
 
     ```bash
     pip install -r requirements.txt
     ```
    
-1. Выполнить миграции:
+4. Run a migration:
 
     ```bash
     python3 manage.py migrate
     ```
    
-1. Собрать статические файлы:
+5. Create a superuser:
+
+    ```bash
+    python3 manage.py createsuperuser
+    ```
+
+6. Collect static files:
 
     ```bash
     python3 manage.py collectstatic
     ```
    
-1. Запустить сервер:
+7. Run server:
 
     ```bash
     python3 manage.py runserver
     ```
    
-1. Список эндпоинтов:
+8. Get a list of endpoints by url:
 
    ```angular2html
-   http://127.0.0.1:8000/admin/ - административный раздел сайта
-   http://127.0.0.1:8000/swagger/ - документация к API сайта
+   http://127.0.0.1:8000/admin/ - admin panel
+   http://127.0.0.1:8000/swagger/ - documents for API
    ```
    
-1. Запуск контейнера:
+9. Run containers in Docker`s containers:
 
    ```bash
     mkdir -p ./Data/db/
@@ -131,9 +130,9 @@
     docker-compose run --rm web sh -c "cd ./src && python3 manage.py collectstatic"
     ```
    
-1. Запуск тестов в контейнере:
+10. Run tests in Docker`s containers:
 
-    ```bash
-    docker-compose run --rm web ./src/manage.py test
-    ```
+     ```bash
+     docker-compose run --rm web ./src/manage.py test
+     ```
 
