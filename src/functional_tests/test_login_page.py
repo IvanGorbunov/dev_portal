@@ -26,4 +26,3 @@ class TestProjectListPage(StaticLiveServerTestCase):
         self.assertEqual(len(alert), 2)
         self.assertEquals(alert[0].text, 'Ivan')
         self.assertEquals(alert[1].text, 'Tech')
-
