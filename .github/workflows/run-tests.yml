@@ -83,5 +83,6 @@ jobs:
         run: |
           wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/109.0.5414.74/chromedriver_linux64.zip
           unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
+          cp /usr/local/bin/chromedriver /src/functional_tests/
           cd ./src
-          python manage.py test apps/ functional_tests
+          python /src/manage.py test apps/ functional_tests
