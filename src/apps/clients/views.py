@@ -9,10 +9,8 @@ from rest_framework.reverse import reverse_lazy
 from apps.clients.choices import ClientsStatus
 from apps.clients.forms import ClientCreationForm
 from apps.clients.models import Client
+from apps.clients.services import send_letter
 from utils.views import DataMixin, ContextDataMixin
-
-
-from src.apps.clients.services import send_letter
 
 
 class ClientsView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
