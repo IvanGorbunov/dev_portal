@@ -3,7 +3,7 @@ from datetime import datetime
 from apps.clients.tasks import send_new_email
 from utils.email import send_new_letter
 
-from src.settings import settings
+from settings import settings
 
 
 def send_letter(inn: str, name: str, phone: str, email: str) -> None:
