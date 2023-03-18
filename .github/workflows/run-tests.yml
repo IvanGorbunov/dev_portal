@@ -67,6 +67,25 @@ jobs:
           sudo apt install tree
           tree -L 3
 
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+#          envkey_DEBUG: false
+#          envkey_SOME_API_KEY: "123456abcdef"
+          envkey_DJANGO_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          envkey_DJANGO_ALLOWED_HOSTS: '*'
+          envkey_STATIC_ROOT: var/www/staticfiles
+          envkey_SQL_ENGINE: django.db.backends.postgresql
+          envkey_SQL_USER: postgres
+          envkey_SQL_PASSWORD: postgres
+          envkey_SQL_HOST: ${{ env.POSTGRES_HOST }}
+          envkey_SQL_DATABASE: ${{ env.POSTGRES_DB }}
+          envkey_SQL_PORT: ${{ env.POSTGRES_PORT }}
+          envkey_CELERY_ACCEPT_CONTENT: 'application/json'
+          directory: /src/settings
+          file_name: .env
+          fail_on_empty: false
+
       - name: Run Migrations and Tests # run migrations to create table in side car db container
         env:
           DJANGO_SECRET_KEY: ${{ secrets.SECRET_KEY }}
