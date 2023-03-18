@@ -72,7 +72,7 @@ jobs:
         with:
 #          envkey_DEBUG: false
 #          envkey_SOME_API_KEY: "123456abcdef"
-          envkey_DJANGO_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
           envkey_DJANGO_ALLOWED_HOSTS: '*'
           envkey_STATIC_ROOT: var/www/staticfiles
           envkey_SQL_ENGINE: django.db.backends.postgresql
@@ -87,19 +87,31 @@ jobs:
           fail_on_empty: false
 
       - name: Run Migrations and Tests # run migrations to create table in side car db container
-        env:
-          DJANGO_SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          DJANGO_ALLOWED_HOSTS: '*'
-          STATIC_ROOT: var/www/staticfiles
-          SQL_ENGINE: django.db.backends.postgresql
-          SQL_USER: postgres
-          SQL_PASSWORD: postgres
-          SQL_HOST: ${{ env.POSTGRES_HOST }}
-          SQL_DATABASE: ${{ env.POSTGRES_DB }}
-          SQL_PORT: ${{ env.POSTGRES_PORT }}
-          CELERY_ACCEPT_CONTENT: 'application/json'
+#        env:
+#          DJANGO_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+#          DJANGO_ALLOWED_HOSTS: '*'
+#          STATIC_ROOT: var/www/staticfiles
+#          SQL_ENGINE: django.db.backends.postgresql
+#          SQL_USER: postgres
+#          SQL_PASSWORD: postgres
+#          SQL_HOST: ${{ env.POSTGRES_HOST }}
+#          SQL_DATABASE: ${{ env.POSTGRES_DB }}
+#          SQL_PORT: ${{ env.POSTGRES_PORT }}
+#          CELERY_ACCEPT_CONTENT: 'application/json'
         run: |
           wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/109.0.5414.74/chromedriver_linux64.zip
           unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
           cp /usr/local/bin/chromedriver ./src/functional_tests/chromedriver
+
+#          touch .env
+#          echo DJANGO_SECRET_KEY=${{ secrets.DB_ENGINE }} >> .env
+#          echo DJANGO_ALLOWED_HOSTS=${{ secrets.DB_NAME }} >> .env
+#          echo STATIC_ROOT=${{ secrets.POSTGRES_USER }} >> .env
+#          echo SQL_ENGINE=${{ secrets.POSTGRES_PASSWORD }} >> .env
+#          echo SQL_USER=${{ secrets.DB_HOST }} >> .env
+#          echo SQL_PASSWORD=${{ secrets.EMAIL_HOST }} >> .env
+#          echo SQL_DATABASE=${{ secrets.EMAIL_HOST_USER }} >> .env
+#          echo SQL_PORT=${{ secrets.EMAIL_HOST_PASSWORD }} >> .env
+#          echo CELERY_ACCEPT_CONTENT=${{ secrets.EMAIL_PORT }} >> .env
+
           python ./src/manage.py test apps/ functional_tests
