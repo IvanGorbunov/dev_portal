@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
@@ -11,11 +9,10 @@ from rest_framework.reverse import reverse_lazy
 from apps.clients.choices import ClientsStatus
 from apps.clients.forms import ClientCreationForm
 from apps.clients.models import Client
-from apps.clients.tasks import send_new_email
-from utils.email import send_new_letter
 from utils.views import DataMixin, ContextDataMixin
 
-from utils.email import send_new_letter
+
+from src.apps.clients.services import send_letter
 
 
 class ClientsView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
@@ -76,26 +73,7 @@ class RegisterViewSet(View):
         if form.is_valid():
             form.save()
             if settings.EMAIL_ADR_REGISTRATION:
-                theme = 'Зарегистрирован новый клиент в системе "Портал разработки"'
-                message = f'Зарегистрирован новый клиент:\n' \
-                          f'ИНН: {request.POST.get("inn")}\n' \
-                          f'Организация: {request.POST.get("name")}\n' \
-                          f'Телефон: {request.POST.get("phone")}\n' \
-                          f'e-mail: {request.POST.get("email")}\n\n' \
-                          f'Создано: {datetime.now().strftime("%d.%m.%Y %H:%M:%S")}\n'
-
-                if settings.CELERY_BROKER_URL:
-                    send_new_email.delay(
-                        settings.EMAIL_ADR_REGISTRATION,
-                        theme,
-                        message
-                    )
-                else:
-                    send_new_letter(
-                        settings.EMAIL_ADR_REGISTRATION,
-                        theme,
-                        message
-                    )
+                send_letter(inn=request.POST.get("inn"), name=request.POST.get("name"), phone=request.POST.get("phone"), email=request.POST.get("email"))
             return redirect('clients:answer')
 
         context = {

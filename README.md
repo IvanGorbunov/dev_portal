@@ -3,7 +3,7 @@
 ---
 The project is a website designed to facilitate the process of software development. The system provides for the registration of user requests for feedback on the operation of the software.
 
-Features:
+### Features:
  - [x] users requests
  - [ ] kanban board
  - [ ] profile of the project
