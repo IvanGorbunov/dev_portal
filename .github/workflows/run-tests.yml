@@ -69,13 +69,12 @@ jobs:
 
       - name: Run Migrations and Tests # run migrations to create table in side car db container
         env:
-          DEBUG: True
-          DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }}
+          DJANGO_SECRET_KEY: ${{ secrets.SECRET_KEY }}
           DJANGO_ALLOWED_HOSTS: '*'
           STATIC_ROOT: var/www/staticfiles
           SQL_ENGINE: django.db.backends.postgresql
-          SQL_USER: ${{ env.POSTGRES_USER }}
-          SQL_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          SQL_USER: postgres
+          SQL_PASSWORD: postgres
           SQL_HOST: ${{ env.POSTGRES_HOST }}
           SQL_DATABASE: ${{ env.POSTGRES_DB }}
           SQL_PORT: ${{ env.POSTGRES_PORT }}
