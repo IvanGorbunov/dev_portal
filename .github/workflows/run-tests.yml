@@ -104,7 +104,7 @@ jobs:
           cp /usr/local/bin/chromedriver ./src/functional_tests/chromedriver
           touch ./src/settings.env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
-          echo DJANGO_ALLOWED_HOSTS=* >> .env
+#          echo DJANGO_ALLOWED_HOSTS=* >> .env
           echo STATIC_ROOT=var/www/staticfiles >> .env
           echo SQL_ENGINE=${{ secrets.POSTGRES_PASSWORD }} >> .env
           echo SQL_USER=postgres >> .env

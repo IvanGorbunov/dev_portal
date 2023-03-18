@@ -37,7 +37,7 @@ SECRET_KEY = env.str('SECRET_KEY', '')
 DEBUG = env.bool('DEBUG', False)
 SQL_DEBUG = env.bool('SQL_DEBUG', False)
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', '*')
 
 
 # Application definition
