@@ -14,7 +14,8 @@ class TestProjectListPage(StaticLiveServerTestCase):
         chrome_options.add_argument('--window-size=1420,1080')
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-gpu')
-        self.browser = webdriver.Chrome(executable_path='functional_tests/chromedriver', chrome_options=chrome_options)
+        self.browser = webdriver.Chrome(executable_path='./functional_tests/chromedriver', chrome_options=chrome_options)
+        print(f'\nchromedriverVersion: {self.browser.capabilities["chrome"]["chromedriverVersion"]}\n')
 
     def tearDown(self):
         self.browser.quit()
