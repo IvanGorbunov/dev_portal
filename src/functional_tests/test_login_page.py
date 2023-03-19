@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.test import override_settings
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 @override_settings(ALLOWED_HOSTS=['*'])  # Disable ALLOW_HOSTS
@@ -14,7 +15,7 @@ class TestProjectListPage(StaticLiveServerTestCase):
         chrome_options.add_argument('--window-size=1420,1080')
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-gpu')
-        self.browser = webdriver.Chrome(executable_path='./src/functional_tests/chromedriver_109', chrome_options=chrome_options)
+        self.browser = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
 
     def tearDown(self):
         self.browser.quit()
