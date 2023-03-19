@@ -111,4 +111,5 @@ jobs:
           echo SQL_DATABASE=${{ env.POSTGRES_DB }} >> .env
           echo SQL_PORT=${{ env.POSTGRES_PORT }} >> .env
           echo SENTRY_DSN=${{ secrets.SENTRY_DSN }} >> .env
-          python ./src/manage.py test apps/ functional_tests
+          tree -L 3
+          python ./src/manage.py test ./src/apps/ functional_tests
