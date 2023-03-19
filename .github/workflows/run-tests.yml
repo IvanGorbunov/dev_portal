@@ -100,8 +100,11 @@ jobs:
 #          CELERY_ACCEPT_CONTENT: 'application/json'
         run: |
           wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/109.0.5414.74/chromedriver_linux64.zip
+          echo ----------------- unzip ---------------------------------
           unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
+          echo ------------------ copy ---------------------------------
           cp /usr/local/bin/chromedriver ./src/functional_tests/chromedriver
+          echo ------------------ .env ---------------------------------
           touch ./src/settings.env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
           echo STATIC_ROOT=var/www/staticfiles >> .env
