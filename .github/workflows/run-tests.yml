@@ -67,46 +67,17 @@ jobs:
           sudo apt install tree
           tree -L 3
 
-#      - name: Make envfile
-#        uses: SpicyPizza/create-envfile@v1.3
-#        with:
-##          envkey_DEBUG: false
-##          envkey_SOME_API_KEY: "123456abcdef"
-#          envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
-#          envkey_DJANGO_ALLOWED_HOSTS: '*'
-#          envkey_STATIC_ROOT: var/www/staticfiles
-#          envkey_SQL_ENGINE: django.db.backends.postgresql
-#          envkey_SQL_USER: postgres
-#          envkey_SQL_PASSWORD: postgres
-#          envkey_SQL_HOST: ${{ env.POSTGRES_HOST }}
-#          envkey_SQL_DATABASE: ${{ env.POSTGRES_DB }}
-#          envkey_SQL_PORT: ${{ env.POSTGRES_PORT }}
-#          envkey_CELERY_ACCEPT_CONTENT: 'application/json'
-#          directory: /src/settings
-#          file_name: .env
-#          fail_on_empty: false
-
       - name: Run Migrations and Tests # run migrations to create table in side car db container
-#        env:
-#          DJANGO_SECRET_KEY: ${{ secrets.SECRET_KEY }}
-#          DJANGO_ALLOWED_HOSTS: '*'
-#          STATIC_ROOT: var/www/staticfiles
-#          SQL_ENGINE: django.db.backends.postgresql
-#          SQL_USER: postgres
-#          SQL_PASSWORD: postgres
-#          SQL_HOST: ${{ env.POSTGRES_HOST }}
-#          SQL_DATABASE: ${{ env.POSTGRES_DB }}
-#          SQL_PORT: ${{ env.POSTGRES_PORT }}
-#          CELERY_ACCEPT_CONTENT: 'application/json'
         run: |
           wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/109.0.5414.74/chromedriver_linux64.zip
           echo ----------------- unzip ---------------------------------
           unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
           echo ------------------ copy ---------------------------------
-          cp /usr/local/bin/chromedriver ./src/functional_tests/chromedriver
+          cp /usr/local/bin/chromedriver ./src/functional_tests/chromedriver_109
           echo ------------------ .env ---------------------------------
           touch ./src/settings/.env
           echo ------------------ .env created -------------------------
+          echo DEBUG=True >> ./src/settings/.env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> ./src/settings/.env
           echo STATIC_ROOT=var/www/staticfiles >> ./src/settings/.env
           echo SQL_ENGINE=${{ secrets.POSTGRES_PASSWORD }} >> ./src/settings/.env
@@ -116,4 +87,5 @@ jobs:
           echo SQL_PORT=${{ env.POSTGRES_PORT }} >> ./src/settings/.env
           echo SENTRY_DSN=${{ secrets.SENTRY_DSN }} >> ./src/settings/.env
           echo ------------------ run tests -------------------------------
+          tree -L 3
           python ./src/manage.py test ./src/apps/ functional_tests
