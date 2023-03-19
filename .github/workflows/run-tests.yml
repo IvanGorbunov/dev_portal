@@ -106,6 +106,7 @@ jobs:
           cp /usr/local/bin/chromedriver ./src/functional_tests/chromedriver
           echo ------------------ .env ---------------------------------
           touch ./src/settings/.env
+          echo ------------------ .env created -------------------------
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> ./src/settings/.env
           echo STATIC_ROOT=var/www/staticfiles >> ./src/settings/.env
           echo SQL_ENGINE=${{ secrets.POSTGRES_PASSWORD }} >> ./src/settings/.env
@@ -114,5 +115,5 @@ jobs:
           echo SQL_DATABASE=${{ env.POSTGRES_DB }} >> ./src/settings/.env
           echo SQL_PORT=${{ env.POSTGRES_PORT }} >> ./src/settings/.env
           echo SENTRY_DSN=${{ secrets.SENTRY_DSN }} >> ./src/settings/.env
-          tree -L 3
+          echo ------------------ run tests -------------------------------
           python ./src/manage.py test ./src/apps/ functional_tests
