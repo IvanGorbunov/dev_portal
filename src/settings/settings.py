@@ -37,7 +37,7 @@ SECRET_KEY = env.str('SECRET_KEY', '')
 DEBUG = env.bool('DEBUG', False)
 SQL_DEBUG = env.bool('SQL_DEBUG', False)
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['*'])
 
 
 # Application definition
@@ -245,10 +245,10 @@ CACHES = {
 CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
-CELERY_ACCEPT_CONTENT = env.list('CELERY_ACCEPT_CONTENT')
-CELERY_TASK_SERIALIZER = env.str('CELERY_TASK_SERIALIZER', '')
-CELERY_RESULT_SERIALIZER = env.str('CELERY_RESULT_SERIALIZER', '')
-CELERY_TIMEZONE = env.str('CELERY_TIMEZONE', '')
+CELERY_ACCEPT_CONTENT = env.list('CELERY_ACCEPT_CONTENT', default=['application/json'])
+CELERY_TASK_SERIALIZER = env.str('CELERY_TASK_SERIALIZER', 'json')
+CELERY_RESULT_SERIALIZER = env.str('CELERY_RESULT_SERIALIZER', 'json')
+CELERY_TIMEZONE = env.str('CELERY_TIMEZONE', 'Europe/Moscow')
 # endregion
 
 CRISPY_TEMPLATE_PACK = 'bootstrap'

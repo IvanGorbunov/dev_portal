@@ -68,18 +68,19 @@ jobs:
           tree -L 3
 
       - name: Run Migrations and Tests # run migrations to create table in side car db container
-        env:
-          DEBUG: True
-          DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }}
-          DJANGO_ALLOWED_HOSTS: '*'
-          STATIC_ROOT: var/www/staticfiles
-          SQL_ENGINE: django.db.backends.postgresql
-          SQL_USER: ${{ env.POSTGRES_USER }}
-          SQL_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-          SQL_HOST: ${{ env.POSTGRES_HOST }}
-          SQL_DATABASE: ${{ env.POSTGRES_DB }}
-          SQL_PORT: ${{ env.POSTGRES_PORT }}
-          CELERY_ACCEPT_CONTENT: 'application/json'
         run: |
-          cd ./src
-          python manage.py test
+          wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/109.0.5414.74/chromedriver_linux64.zip
+          unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
+          cp /usr/local/bin/chromedriver ./src/functional_tests/chromedriver_109
+          touch ./src/settings/.env
+          echo DEBUG=True >> ./src/settings/.env
+          echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> ./src/settings/.env
+          echo STATIC_ROOT=var/www/staticfiles >> ./src/settings/.env
+          echo SQL_ENGINE=${{ secrets.POSTGRES_PASSWORD }} >> ./src/settings/.env
+          echo SQL_USER=postgres >> ./src/settings/.env
+          echo SQL_PASSWORD=postgres >> ./src/settings/.env
+          echo SQL_DATABASE=${{ env.POSTGRES_DB }} >> ./src/settings/.env
+          echo SQL_PORT=${{ env.POSTGRES_PORT }} >> ./src/settings/.env
+          echo SENTRY_DSN=${{ secrets.SENTRY_DSN }} >> ./src/settings/.env
+          cd src/
+          python manage.py test apps/ functional_tests

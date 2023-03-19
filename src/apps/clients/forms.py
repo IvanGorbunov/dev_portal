@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
@@ -26,7 +27,7 @@ class ClientCreationForm(forms.ModelForm):
     def clean_inn(self):
         form_inn = self.cleaned_data.get('inn')
 
-        existing = Client.objects.filter(inn=form_inn).exists()
+        existing = Client.objects.filter(~Q(id=self.instance.id), inn=form_inn).exists()
         if existing:
             raise ValidationError('Такой ИНН уже существует!')
 

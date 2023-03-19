@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.db.models import F
+
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView, ListView, UpdateView
@@ -11,6 +11,8 @@ from rest_framework.reverse import reverse_lazy
 from apps.users.forms import UserForm, UserCreationForm
 from apps.users.models import User, Client, Stuff
 from utils.views import DataMixin, ContextDataMixin
+
+from apps.users.services import add_clients_fields, add_users_context_data
 
 
 class LoginUser(LoginView):
@@ -54,20 +56,13 @@ class UserListView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
     context_object_name = 'users'
     template_name = 'users/users_list.html'
 
+    @add_clients_fields
     def get_queryset(self):
-        qs = super().get_queryset()
-        qs = qs.annotate(client_id=F('client__id'))
-        qs = qs.annotate(client_name=F('client__name'))
-        return qs
+        return super().get_queryset()
 
+    @add_users_context_data({'title': 'Список пользователей', 'profile_url': 'users:users-profile'})
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        c_def = super().get_default_context_data()
-        c_def['title'] = 'Список пользователей'
-        c_def['profile_url'] = 'users:users-profile'
-
-        return dict(list(context.items()) + list(c_def.items()))
+        return super().get_context_data(**kwargs)
 
 
 class UserUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
@@ -76,14 +71,9 @@ class UserUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
     success_url = reverse_lazy('users:list')
     form_class = UserForm
 
+    @add_users_context_data({'title': 'Пользователь', 'submit_url': 'users:users-profile'})
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        c_def = super().get_default_context_data()
-        c_def['title'] = 'Пользователь'
-        c_def['submit_url'] = 'users:users-profile'
-
-        return dict(list(context.items()) + list(c_def.items()))
+        return super().get_context_data(**kwargs)
 
 
 class ClientListView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
@@ -91,20 +81,13 @@ class ClientListView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
     context_object_name = 'users'
     template_name = 'users/users_list.html'
 
+    @add_clients_fields
     def get_queryset(self):
-        qs = super().get_queryset()
-        qs = qs.annotate(client_id=F('client__id'))
-        qs = qs.annotate(client_name=F('client__name'))
-        return qs
+        return super().get_queryset()
 
+    @add_users_context_data({'title': 'Список пользователей - клиентов', 'profile_url': 'users:client-profile'})
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        c_def = super().get_default_context_data()
-        c_def['title'] = 'Список пользователей - клиентов'
-        c_def['profile_url'] = 'users:client-profile'
-
-        return dict(list(context.items()) + list(c_def.items()))
+        return super().get_context_data(**kwargs)
 
 
 class ClientUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
@@ -113,14 +96,9 @@ class ClientUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
     success_url = reverse_lazy('users:clients-list')
     form_class = UserForm
 
+    @add_users_context_data({'title': 'Пользователь', 'submit_url': 'users:client-profile'})
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        c_def = super().get_default_context_data()
-        c_def['title'] = 'Пользователь'
-        c_def['submit_url'] = 'users:client-profile'
-
-        return dict(list(context.items()) + list(c_def.items()))
+        return super().get_context_data(**kwargs)
 
 
 class StuffListView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
@@ -128,14 +106,9 @@ class StuffListView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
     context_object_name = 'users'
     template_name = 'users/users_list.html'
 
+    @add_users_context_data({'title': 'Список пользователей - сотрудников', 'profile_url': 'users:stuff-profile'})
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        c_def = super().get_default_context_data()
-        c_def['title'] = 'Список пользователей - сотрудников'
-        c_def['profile_url'] = 'users:stuff-profile'
-
-        return dict(list(context.items()) + list(c_def.items()))
+        return super().get_context_data(**kwargs)
 
 
 class StuffUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
@@ -144,11 +117,6 @@ class StuffUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
     success_url = reverse_lazy('users:stuffs-list')
     form_class = UserForm
 
+    @add_users_context_data({'title': 'Пользователь', 'submit_url': 'users:stuff-profile'})
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        c_def = super().get_default_context_data()
-        c_def['title'] = 'Пользователь'
-        c_def['submit_url'] = 'users:stuff-profile'
-
-        return dict(list(context.items()) + list(c_def.items()))
+        return super().get_context_data(**kwargs)
