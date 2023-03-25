@@ -3,9 +3,8 @@ from django.shortcuts import render
 from django.views.generic import ListView, UpdateView
 from rest_framework.reverse import reverse_lazy
 
-from apps.products.forms import ProductItemForm
-from apps.products.models import Product
-from apps.users.choices import UserRole
+from .forms import ProductItemForm
+from .models import Product
 from utils.views import DataMixin, ContextDataMixin
 
 

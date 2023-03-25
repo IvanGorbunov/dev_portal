@@ -1,8 +1,8 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-
-from apps.users.choices import UserRole
 from django.utils.translation import gettext_lazy as _
+
+from .choices import UserRole
 
 
 class User(AbstractUser):

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from apps.clients.models import Client
-from apps.products.serializers import ProductDetailSerializer
+from .models import Client
+from ..products.serializers import ProductDetailSerializer
 
 
 class ClientListSerializer(serializers.ModelSerializer):

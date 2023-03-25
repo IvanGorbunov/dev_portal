@@ -1,7 +1,7 @@
 import openpyxl
 from openpyxl.writer.excel import save_virtual_workbook
 
-from apps.clients_requests.choices import StatusClientsRequest
+from .choices import StatusClientsRequest
 
 
 class ExportClientsRequest:
