@@ -2,10 +2,10 @@ from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 from rest_framework.utils import json
 
-from apps.clients.choices import ClientsStatus
-from apps.products.models import Product
-from apps.products.serializers import ProductListSerializer
-from apps.users.models import User
+from .choices import ClientsStatus
+from ..products.models import Product
+from ..products.serializers import ProductListSerializer
+from ..users.models import User
 
 
 class Client(models.Model):

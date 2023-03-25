@@ -3,7 +3,7 @@ from django.contrib.admin import ModelAdmin, TabularInline
 from django.utils.translation import gettext_lazy as _
 from django_filters import DateRangeFilter
 
-from apps.clients_requests.models import ClientsRequest, ClientsRequestHistory, ClientsRequestAttachment
+from .models import ClientsRequest, ClientsRequestHistory, ClientsRequestAttachment
 
 
 class ClientsRequestAttachmentInline(TabularInline):

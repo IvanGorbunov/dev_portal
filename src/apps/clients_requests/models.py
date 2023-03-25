@@ -4,10 +4,10 @@ from datetime import datetime
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from apps.clients.models import Client
-from apps.clients_requests.choices import StatusClientsRequest, ClientsRequestAttachmentType
-from apps.products.models import Product
-from apps.users.models import User
+from ..clients.models import Client
+from ..clients_requests.choices import StatusClientsRequest, ClientsRequestAttachmentType
+from ..products.models import Product
+from ..users.models import User
 
 
 class ClientsRequest(models.Model):

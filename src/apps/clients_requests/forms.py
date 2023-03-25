@@ -1,10 +1,10 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from apps.clients.models import Client
-from apps.clients_requests.choices import StatusClientsRequest
-from apps.clients_requests.models import ClientsRequest
-from apps.products.models import Product
+from ..clients.models import Client
+from .choices import StatusClientsRequest
+from .models import ClientsRequest
+from ..products.models import Product
 
 
 class ClientsRequestItemForm(forms.ModelForm):

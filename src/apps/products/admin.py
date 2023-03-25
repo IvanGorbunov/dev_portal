@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 
-from apps.products.models import Product
+from .models import Product
 
 
 @admin.register(Product)

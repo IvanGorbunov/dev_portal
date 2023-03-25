@@ -8,43 +8,13 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from rest_framework.reverse import reverse_lazy, reverse
 from rest_framework.views import APIView
 
-from apps.clients_requests.choices import StatusClientsRequest
-from apps.clients_requests.excel import ExportClientsRequest
-from apps.clients_requests.forms import ClientsRequestItemForm, ClientsRequestItemAdminForm
-from apps.clients_requests.models import ClientsRequest, ClientsRequestAttachment
-from apps.users.choices import UserRole
+from .choices import StatusClientsRequest
+from .excel import ExportClientsRequest
+from .forms import ClientsRequestItemForm, ClientsRequestItemAdminForm
+from .models import ClientsRequest, ClientsRequestAttachment
+from .services import update_clients_request, ClientsRequestsListMixin, add_attachments
+from ..users.choices import UserRole
 from utils.views import DataMixin, ContextDataMixin, MultiSerializerViewSet
-
-
-class ClientsRequestsListMixin:
-
-    def get_clients_request_queryset(self):
-        request = self.request
-
-        date = request.GET.get('date')
-        status = request.GET.get('status')
-        product = request.GET.get('product')
-
-        qs = super().get_queryset()
-        if not request.user.is_role_staff_or_admin():
-            qs = qs.filter(author__user=request.user)
-        qs = qs.annotate(client_name=F('author__name'))
-        qs = qs.annotate(inn=F('author__inn'))
-        qs = qs.annotate(clients_phone=F('author__phone'))
-        qs = qs.annotate(clients_email=F('author__email'))
-        qs = qs.annotate(product_name=F('product__name'))
-        qs = qs.order_by('-create_dt')
-        if date:
-            date = date.split('.')
-            qs = qs.filter(create_dt__day=date[0])
-            qs = qs.filter(create_dt__month=date[1])
-            qs = qs.filter(create_dt__year=date[2])
-        if status:
-            qs = qs.filter(status=status)
-        if product:
-            qs = qs.filter(product__name__icontains=product)
-
-        return qs
 
 
 class ClientsRequestsList(LoginRequiredMixin, DataMixin, ContextDataMixin, ClientsRequestsListMixin, ListView):
@@ -125,27 +95,22 @@ class ClientsRequestUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView)
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        if request.user.is_role_client() and request.POST.get('status') != StatusClientsRequest.NEW:
+        user = request.user
+        if user.is_role_client() and request.POST.get('status') != StatusClientsRequest.NEW:
             return render(request, 'not_allowed.html')
 
-        if self.request.user.is_role_staff_or_admin():
+        if user.is_role_staff_or_admin():
             self.form_class = ClientsRequestItemAdminForm
             form = ClientsRequestItemAdminForm(request.POST, request.FILES)
         else:
-            kwargs['user'] = self.request.user
-            form = ClientsRequestItemForm(request.POST, request.FILES, user=self.request.user)
+            kwargs['user'] = user
+            form = ClientsRequestItemForm(request.POST, request.FILES, user=user)
         if form.is_valid():
             super().post(request, *args, **kwargs)
             clients_request = self.get_object()
             clients_request.save()
 
-            files = request.FILES.getlist('attachments')
-            if files:
-                clients_request = self.get_object()
-
-                for file in files:
-                    max_num = ClientsRequestAttachment.objects.aggregate(Max('order_num'))['order_num__max']
-                    ClientsRequestAttachment.objects.create(order_num=max_num + 1, clients_request=clients_request, name=file.name, file=file)
+            add_attachments(clients_request, files=request.FILES.getlist('attachments'))
 
         return redirect('clients_requests:list')
 
