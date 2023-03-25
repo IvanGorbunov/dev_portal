@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from apps.clients_requests.choices import StatusClientsRequest
-from apps.clients_requests.models import ClientsRequest
-from apps.users.serializers import AuthorMixin
+from .choices import StatusClientsRequest
+from .models import ClientsRequest
+from ..users.serializers import AuthorMixin
 
 
 class StatusDetailSerializer(serializers.ModelSerializer):

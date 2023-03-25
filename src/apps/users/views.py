@@ -8,11 +8,10 @@ from django.views import View
 from django.views.generic import TemplateView, ListView, UpdateView
 from rest_framework.reverse import reverse_lazy
 
-from apps.users.forms import UserForm, UserCreationForm
-from apps.users.models import User, Client, Stuff
+from .forms import UserForm, UserCreationForm
+from .models import User, Client, Stuff
+from .services import add_clients_fields, add_users_context_data
 from utils.views import DataMixin, ContextDataMixin
-
-from apps.users.services import add_clients_fields, add_users_context_data
 
 
 class LoginUser(LoginView):

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from apps.clients.tasks import send_new_email
+from .tasks import send_new_email
 from utils.email import send_new_letter
 
 from settings import settings

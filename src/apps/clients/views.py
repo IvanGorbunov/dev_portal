@@ -6,10 +6,10 @@ from django.views.generic import TemplateView, ListView, UpdateView
 from django.conf import settings
 from rest_framework.reverse import reverse_lazy
 
-from apps.clients.choices import ClientsStatus
-from apps.clients.forms import ClientCreationForm
-from apps.clients.models import Client
-from apps.clients.services import send_letter
+from .choices import ClientsStatus
+from .forms import ClientCreationForm
+from .models import Client
+from .services import send_letter
 from utils.views import DataMixin, ContextDataMixin
 
 

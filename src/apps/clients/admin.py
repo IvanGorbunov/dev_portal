@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 
-from apps.clients.models import Client, ClientsHistory
+from .models import Client, ClientsHistory
 
 
 @admin.register(Client)

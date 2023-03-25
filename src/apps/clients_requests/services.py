@@ -1,7 +1,7 @@
 from django.db.models import F, Max
 
-from apps.clients_requests.forms import ClientsRequestItemAdminForm, ClientsRequestItemForm
-from apps.clients_requests.models import ClientsRequest, ClientsRequestAttachment
+from .forms import ClientsRequestItemAdminForm, ClientsRequestItemForm
+from .models import ClientsRequest, ClientsRequestAttachment
 
 
 class ClientsRequestsListMixin:
