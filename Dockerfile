@@ -24,7 +24,7 @@ RUN pip3 install -r /clients_portal/requirements.txt
 #RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 #COPY /usr/local/bin/chromedriver /clients_portal/src/functional_tests/
 
-RUN apt-get install gettext -y
+#RUN apt-get install gettext -y
 
 # set display port to avoid crash
 ENV DISPLAY=:99

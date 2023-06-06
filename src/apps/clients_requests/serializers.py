@@ -11,15 +11,15 @@ class StatusDetailSerializer(serializers.ModelSerializer):
 
 
 class ClientsRequestListSerializer(serializers.ModelSerializer):
-    client_name = serializers.CharField()
-    inn = serializers.CharField()
-    phone = serializers.CharField()
-    email = serializers.EmailField()
-    product_name = serializers.CharField()
-    status = StatusDetailSerializer()
-
-    create_dt = serializers.SerializerMethodField()
-    update_dt = serializers.SerializerMethodField()
+    # client_name = serializers.CharField()
+    # inn = serializers.CharField()
+    # phone = serializers.CharField()
+    # email = serializers.EmailField()
+    # # product_name = serializers.CharField()
+    # status = StatusDetailSerializer()
+    #
+    # create_dt = serializers.SerializerMethodField()
+    # update_dt = serializers.SerializerMethodField()
 
     class Meta:
         model = ClientsRequest
@@ -34,11 +34,11 @@ class ClientsRequestListSerializer(serializers.ModelSerializer):
             'product',
             'is_delete',
 
-            'client_name',
-            'inn',
+            # 'client_name',
+            # 'inn',
             'phone',
             'email',
-            'product_name',
+            # 'product_name',
         )
 
     def get_create_dt(self, clients_request: ClientsRequest):

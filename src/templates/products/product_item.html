@@ -1,5 +1,7 @@
 {% extends '../base.html' %}
 {% load django_bootstrap5 %}
+{% load crispy_forms_tags %}
+
 {% load static %}
 
 {% block title %}Продукт{% endblock%}
@@ -16,11 +18,11 @@
     <hr>
 
     <form action="{% url 'products:product-update' object.pk %}" method="post" novalidate>
-      {% csrf_token %}
-      {% bootstrap_form form %}
+        {% csrf_token %}
+        {#{% bootstrap_form form %}#}
+        {{ form|crispy }}
         {% if user_is_admin %}
-        {% bootstrap_button button_type="submit" content="Сохранить" %}
+            {% bootstrap_button button_type="submit" content="Сохранить" %}
         {% endif %}
     </form>
-
 {% endblock %}

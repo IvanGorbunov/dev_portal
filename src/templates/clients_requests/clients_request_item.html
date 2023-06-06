@@ -25,7 +25,8 @@
     <form action="" method="post" novalidate enctype="multipart/form-data">
     <div class="row">
         {% csrf_token %}
-        {% bootstrap_form form %}
+{#        {% bootstrap_form form %}#}
+        {{ form|crispy }}
 
         <div class="">
             {% for attachment in attachments %}
