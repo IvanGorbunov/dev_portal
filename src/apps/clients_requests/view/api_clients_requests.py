@@ -30,8 +30,6 @@ class ClientsRequestsViewSet(viewsets.GenericViewSet,
     ]
     order_by = ['id', ]
 
-
-
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
 
