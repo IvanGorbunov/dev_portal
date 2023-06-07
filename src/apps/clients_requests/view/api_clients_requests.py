@@ -9,9 +9,8 @@ from apps.clients_requests.serializers import ClientsRequestListSerializer
 
 
 class ClientsRequestsViewSet(viewsets.GenericViewSet,
-                         mixins.RetrieveModelMixin,
-                         mixins.ListModelMixin):
-
+                             mixins.RetrieveModelMixin,
+                             mixins.ListModelMixin):
     queryset = ClientsRequest.objects.all()
 
     serializer_class = ClientsRequestListSerializer
