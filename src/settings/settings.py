@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'apps.clients',
     'apps.clients_requests',
     'apps.products',
+    'apps.store',
 
     'drf_yasg',
     'debug_toolbar',
@@ -94,6 +95,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.store.context_processors.price_list',
             ],
         },
     },

@@ -5,7 +5,7 @@ from .models import Product
 
 
 @admin.register(Product)
-class clientAdmin(ModelAdmin):
+class ProductAdmin(ModelAdmin):
     list_display = (
         'id',
         'name',

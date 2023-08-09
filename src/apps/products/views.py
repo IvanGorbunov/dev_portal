@@ -22,7 +22,7 @@ class ProductView(LoginRequiredMixin, DataMixin, ContextDataMixin, ListView):
 
 
 class ProductUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
-    template_name = 'products/product_item.html'
+    template_name = 'products/price_list_item.html'
     success_url = reverse_lazy('products:list')
     model = Product
     form_class = ProductItemForm
