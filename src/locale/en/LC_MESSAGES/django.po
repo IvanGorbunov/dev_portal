@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-09 04:23+0000\n"
+"POT-Creation-Date: 2023-08-10 07:46+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,24 +17,130 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: apps/clients/forms.py:13 apps/users/forms.py:22
-msgid "Email"
+
+#: apps/article/choices.py:17
+msgid "Like"
 msgstr ""
 
+#: apps/article/choices.py:18
+msgid "Dislike"
+msgstr ""
+
+#: apps/article/choices.py:35 apps/article/models.py:47
+#: apps/article/models.py:87 apps/article/models.py:102
+msgid "Article"
+msgstr ""
+
+#: apps/article/choices.py:36
+msgid "Project"
+msgstr ""
+
+#: apps/article/choices.py:63
+msgid "Draft"
+msgstr ""
+
+#: apps/article/choices.py:64
+msgid "On approval"
+msgstr ""
+
+#: apps/article/choices.py:65
+msgid "Rejected"
+msgstr ""
+
+#: apps/article/choices.py:66
+msgid "Agreed"
+msgstr ""
+
+#: apps/article/choices.py:67
+msgid "Published"
+msgstr ""
+
+#: apps/article/choices.py:68
+msgid "On actualisation"
+msgstr ""
+
+#: apps/article/choices.py:88
+msgid "All"
+msgstr ""
+
+#: apps/article/choices.py:89
+msgid "Developers"
+msgstr ""
+
+#: apps/article/choices.py:90
+msgid "Administrators"
+msgstr ""
+
+#: apps/article/choices.py:104
+msgid "Media"
+msgstr ""
+
+#: apps/article/choices.py:105
+msgid "Attachment"
+msgstr ""
+
+#: apps/article/choices.py:119 apps/article/models.py:107
+msgid "Points"
+msgstr ""
+
+#: apps/article/choices.py:120 apps/article/models.py:108
+msgid "Duration"
+msgstr ""
+
+#: apps/article/models.py:34 apps/clients_requests/models.py:15
+msgid "Title"
+msgstr ""
+
+#: apps/article/models.py:35 apps/clients/models.py:19
+#: apps/clients_requests/models.py:26 apps/products/models.py:8
+#: apps/store/models.py:13
+msgid "Deleted"
+msgstr ""
+
+#: apps/article/models.py:36
+msgid "Trade secret"
+msgstr ""
+
+#: apps/article/models.py:37 apps/clients_requests/models.py:16
+#: apps/clients_requests/models.py:82
+msgid "Description"
+msgstr ""
+
+#: apps/article/models.py:38 apps/article/models.py:105
+msgid "Type"
+msgstr ""
+
+#: apps/article/models.py:39 apps/clients/models.py:18
+#: apps/clients_requests/forms.py:12 apps/clients_requests/forms.py:34
+#: apps/clients_requests/models.py:19 apps/clients_requests/models.py:58
+msgid "Status"
+msgstr ""
+
+#: apps/article/models.py:40
+msgid "Access type"
+msgstr ""
+
+#: apps/article/models.py:42 apps/clients_requests/forms.py:15
+#: apps/clients_requests/models.py:23
+msgid "Author"
+msgstr ""
+
+#: apps/article/models.py:48
+msgid "Articles"
+msgstr ""
+
+#: apps/article/models.py:88 apps/article/models.py:103
 #: apps/clients/models.py:13 apps/clients/models.py:83
 #: apps/clients_requests/models.py:59
 msgid "User"
 msgstr ""
 
-#: apps/clients/models.py:18 apps/clients_requests/forms.py:12
-#: apps/clients_requests/forms.py:34 apps/clients_requests/models.py:19
-#: apps/clients_requests/models.py:58
-msgid "Status"
+#: apps/article/views.py:19
+msgid "List of articles"
 msgstr ""
 
-#: apps/clients/models.py:19 apps/clients_requests/models.py:26
-#: apps/products/models.py:8
-msgid "Deleted"
+#: apps/clients/forms.py:14 apps/users/forms.py:22
+msgid "Email"
 msgstr ""
 
 #: apps/clients/models.py:21 apps/products/models.py:12
@@ -86,24 +192,13 @@ msgid "Attachments:"
 msgstr ""
 
 #: apps/clients_requests/forms.py:13 apps/clients_requests/forms.py:35
+#: apps/store/forms.py:10 apps/store/forms.py:32
 msgid "Is delete"
-msgstr ""
-
-#: apps/clients_requests/forms.py:15 apps/clients_requests/models.py:23
-msgid "Author"
 msgstr ""
 
 #: apps/clients_requests/forms.py:16 apps/clients_requests/models.py:24
 #: apps/products/models.py:11
 msgid "Product"
-msgstr ""
-
-#: apps/clients_requests/models.py:15
-msgid "Title"
-msgstr ""
-
-#: apps/clients_requests/models.py:16 apps/clients_requests/models.py:82
-msgid "Description"
 msgstr ""
 
 #: apps/clients_requests/models.py:17
@@ -166,15 +261,15 @@ msgstr ""
 msgid "Attachments of the request"
 msgstr ""
 
-#: apps/users/admin.py:31
+#: apps/users/admin.py:32
 msgid "Personal info"
 msgstr ""
 
-#: apps/users/admin.py:36
+#: apps/users/admin.py:37
 msgid "Permissions"
 msgstr ""
 
-#: apps/users/admin.py:41
+#: apps/users/admin.py:42
 msgid "Important dates"
 msgstr ""
 
@@ -198,11 +293,11 @@ msgstr ""
 msgid "Password is must !"
 msgstr ""
 
-#: settings/settings.py:190
+#: settings/settings.py:196
 msgid "English"
 msgstr ""
 
-#: settings/settings.py:191
+#: settings/settings.py:197
 msgid "Russian"
 msgstr ""
 
@@ -287,4 +382,12 @@ msgstr ""
 #: templates/registration/password_reset_email.html:12
 #, python-format
 msgid "The %(site_name)s team"
+msgstr ""
+
+#: utils/models.py:8
+msgid "Created"
+msgstr ""
+
+#: utils/models.py:16
+msgid "Updated"
 msgstr ""
