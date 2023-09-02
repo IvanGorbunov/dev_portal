@@ -8,7 +8,7 @@ from ..products.models import Product
 
 
 class ClientsRequestItemForm(forms.ModelForm):
-    attachments = forms.FileField(label=_('Attachments:'), widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)
+    attachments = forms.FileField(label=_('Attachments:'), widget=forms.ClearableFileInput(attrs={'allow_multiple_selected': True}), required=False)
     status = forms.ChoiceField(label=_('Status'), widget=forms.HiddenInput(), choices=StatusClientsRequest.CHOICES, initial=StatusClientsRequest.NEW, required=False)
     is_delete = forms.BooleanField(label=_('Is delete'), widget=forms.HiddenInput(), initial=False, required=False)
 
@@ -30,7 +30,7 @@ class ClientsRequestItemForm(forms.ModelForm):
 
 
 class ClientsRequestItemAdminForm(forms.ModelForm):
-    attachments = forms.FileField(label=_('Attachments:'), widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)
+    attachments = forms.FileField(label=_('Attachments:'), widget=forms.ClearableFileInput(attrs={'allow_multiple_selected': True}), required=False)
     status = forms.ChoiceField(label=_('Status'), choices=StatusClientsRequest.CHOICES, initial=StatusClientsRequest.NEW, required=False)
     is_delete = forms.BooleanField(label=_('Is delete'), initial=False, required=False)
 
