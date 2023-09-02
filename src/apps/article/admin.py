@@ -61,5 +61,3 @@ class ArticleScoreAdmin(ModelAdmin):
         'id',
         'article',
     )
-
-

@@ -45,4 +45,3 @@ class ArticleUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
 
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
-

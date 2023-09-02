@@ -77,7 +77,6 @@ class AccessType:
     DEVELOPERS = 'developers'
     ADMINS = 'administrators'
 
-
     ITEMS = [
         ALL,
         DEVELOPERS,
