@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-10 07:46+0300\n"
+"POT-Creation-Date: 2023-12-07 06:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,8 +26,9 @@ msgstr ""
 msgid "Dislike"
 msgstr ""
 
-#: apps/article/choices.py:35 apps/article/models.py:47
-#: apps/article/models.py:87 apps/article/models.py:102
+#: apps/article/choices.py:35 apps/article/models.py:51
+#: apps/article/models.py:91 apps/article/models.py:106
+#: apps/article/views.py:42
 msgid "Article"
 msgstr ""
 
@@ -43,7 +44,8 @@ msgstr ""
 msgid "On approval"
 msgstr ""
 
-#: apps/article/choices.py:65
+#: apps/article/choices.py:65 apps/vacancy/choices.py:27
+#: apps/vacancy/choices.py:66
 msgid "Rejected"
 msgstr ""
 
@@ -59,83 +61,87 @@ msgstr ""
 msgid "On actualisation"
 msgstr ""
 
-#: apps/article/choices.py:88
+#: apps/article/choices.py:87
 msgid "All"
 msgstr ""
 
-#: apps/article/choices.py:89
+#: apps/article/choices.py:88
 msgid "Developers"
 msgstr ""
 
-#: apps/article/choices.py:90
+#: apps/article/choices.py:89
 msgid "Administrators"
 msgstr ""
 
-#: apps/article/choices.py:104
+#: apps/article/choices.py:103
 msgid "Media"
 msgstr ""
 
-#: apps/article/choices.py:105
+#: apps/article/choices.py:104
 msgid "Attachment"
 msgstr ""
 
-#: apps/article/choices.py:119 apps/article/models.py:107
+#: apps/article/choices.py:118 apps/article/models.py:111
 msgid "Points"
 msgstr ""
 
-#: apps/article/choices.py:120 apps/article/models.py:108
+#: apps/article/choices.py:119 apps/article/models.py:112
 msgid "Duration"
 msgstr ""
 
-#: apps/article/models.py:34 apps/clients_requests/models.py:15
+#: apps/article/models.py:38 apps/clients_requests/models.py:15
 msgid "Title"
 msgstr ""
 
-#: apps/article/models.py:35 apps/clients/models.py:19
+#: apps/article/models.py:39 apps/clients/models.py:19
 #: apps/clients_requests/models.py:26 apps/products/models.py:8
-#: apps/store/models.py:13
+#: apps/store/models.py:13 apps/vacancy/models.py:13 apps/vacancy/models.py:31
+#: apps/vacancy/models.py:45 apps/vacancy/models.py:60
+#: apps/vacancy/models.py:76 apps/vacancy/models.py:89
+#: apps/vacancy/models.py:104 apps/vacancy/models.py:137
 msgid "Deleted"
 msgstr ""
 
-#: apps/article/models.py:36
+#: apps/article/models.py:40
 msgid "Trade secret"
 msgstr ""
 
-#: apps/article/models.py:37 apps/clients_requests/models.py:16
-#: apps/clients_requests/models.py:82
+#: apps/article/models.py:41 apps/clients_requests/models.py:16
+#: apps/clients_requests/models.py:82 apps/vacancy/admin.py:77
 msgid "Description"
 msgstr ""
 
-#: apps/article/models.py:38 apps/article/models.py:105
+#: apps/article/models.py:42 apps/article/models.py:109
 msgid "Type"
 msgstr ""
 
-#: apps/article/models.py:39 apps/clients/models.py:18
+#: apps/article/models.py:43 apps/clients/models.py:18
 #: apps/clients_requests/forms.py:12 apps/clients_requests/forms.py:34
 #: apps/clients_requests/models.py:19 apps/clients_requests/models.py:58
+#: apps/vacancy/models.py:27 apps/vacancy/models.py:130
 msgid "Status"
 msgstr ""
 
-#: apps/article/models.py:40
+#: apps/article/models.py:44
 msgid "Access type"
 msgstr ""
 
-#: apps/article/models.py:42 apps/clients_requests/forms.py:15
+#: apps/article/models.py:46 apps/clients_requests/forms.py:15
 #: apps/clients_requests/models.py:23
 msgid "Author"
 msgstr ""
 
-#: apps/article/models.py:48
+#: apps/article/models.py:52
 msgid "Articles"
 msgstr ""
 
-#: apps/article/models.py:88 apps/article/models.py:103
+#: apps/article/models.py:92 apps/article/models.py:107
 #: apps/clients/models.py:13 apps/clients/models.py:83
 #: apps/clients_requests/models.py:59
 msgid "User"
 msgstr ""
 
-#: apps/article/views.py:19
+#: apps/article/views.py:22
 msgid "List of articles"
 msgstr ""
 
@@ -167,7 +173,7 @@ msgstr ""
 msgid "Attachment of the request"
 msgstr ""
 
-#: apps/clients_requests/choices.py:20
+#: apps/clients_requests/choices.py:20 apps/vacancy/choices.py:25
 msgid "Completed"
 msgstr ""
 
@@ -183,7 +189,8 @@ msgstr ""
 msgid "Pending"
 msgstr ""
 
-#: apps/clients_requests/choices.py:24
+#: apps/clients_requests/choices.py:24 apps/vacancy/choices.py:23
+#: apps/vacancy/choices.py:64
 msgid "New"
 msgstr ""
 
@@ -293,11 +300,159 @@ msgstr ""
 msgid "Password is must !"
 msgstr ""
 
-#: settings/settings.py:196
-msgid "English"
+#: apps/vacancy/admin.py:45
+msgid "Base info"
+msgstr ""
+
+#: apps/vacancy/admin.py:56 apps/vacancy/models.py:123
+msgid "Salary"
+msgstr ""
+
+#: apps/vacancy/admin.py:65
+msgid "Status info"
+msgstr ""
+
+#: apps/vacancy/admin.py:82
+msgid "Projects"
+msgstr ""
+
+#: apps/vacancy/choices.py:24
+msgid "In process"
+msgstr ""
+
+#: apps/vacancy/choices.py:26
+msgid "On checking"
+msgstr ""
+
+#: apps/vacancy/choices.py:65
+msgid "Resume sent"
+msgstr ""
+
+#: apps/vacancy/choices.py:67
+msgid "Invited to an interview"
+msgstr ""
+
+#: apps/vacancy/choices.py:68
+msgid "Received task"
+msgstr ""
+
+#: apps/vacancy/choices.py:69
+msgid "Completed task"
+msgstr ""
+
+#: apps/vacancy/choices.py:70
+msgid "Task sent"
+msgstr ""
+
+#: apps/vacancy/choices.py:71
+msgid "Passed"
+msgstr ""
+
+#: apps/vacancy/choices.py:93
+msgid "A1"
+msgstr ""
+
+#: apps/vacancy/choices.py:94
+msgid "A2"
+msgstr ""
+
+#: apps/vacancy/choices.py:95
+msgid "B1"
+msgstr ""
+
+#: apps/vacancy/choices.py:96
+msgid "B2"
+msgstr ""
+
+#: apps/vacancy/choices.py:97
+msgid "C1"
+msgstr ""
+
+#: apps/vacancy/choices.py:98
+msgid "C2"
+msgstr ""
+
+#: apps/vacancy/models.py:16 apps/vacancy/models.py:116
+msgid "HR"
+msgstr ""
+
+#: apps/vacancy/models.py:17
+msgid "HRs"
+msgstr ""
+
+#: apps/vacancy/models.py:34
+msgid "TestProject"
+msgstr ""
+
+#: apps/vacancy/models.py:35
+msgid "TestProjects"
+msgstr ""
+
+#: apps/vacancy/models.py:48 apps/vacancy/models.py:115
+msgid "Position"
+msgstr ""
+
+#: apps/vacancy/models.py:49
+msgid "Positions"
+msgstr ""
+
+#: apps/vacancy/models.py:57
+msgid "Language level"
+msgstr ""
+
+#: apps/vacancy/models.py:63 apps/vacancy/models.py:121
+msgid "Language"
+msgstr ""
+
+#: apps/vacancy/models.py:64
+msgid "Languages"
+msgstr ""
+
+#: apps/vacancy/models.py:79 apps/vacancy/models.py:118
+msgid "Country"
+msgstr ""
+
+#: apps/vacancy/models.py:80
+msgid "Countries"
+msgstr ""
+
+#: apps/vacancy/models.py:92 apps/vacancy/models.py:125
+msgid "Currency"
+msgstr ""
+
+#: apps/vacancy/models.py:93
+msgid "Currencies"
+msgstr ""
+
+#: apps/vacancy/models.py:107 apps/vacancy/models.py:119
+msgid "Company"
+msgstr ""
+
+#: apps/vacancy/models.py:108
+msgid "Companies"
+msgstr ""
+
+#: apps/vacancy/models.py:124
+msgid "Salary (max)"
+msgstr ""
+
+#: apps/vacancy/models.py:128
+msgid "Test projects"
+msgstr ""
+
+#: apps/vacancy/models.py:140
+msgid "Vacancy"
+msgstr ""
+
+#: apps/vacancy/models.py:141
+msgid "Vacancies"
 msgstr ""
 
 #: settings/settings.py:197
+msgid "English"
+msgstr ""
+
+#: settings/settings.py:198
 msgid "Russian"
 msgstr ""
 

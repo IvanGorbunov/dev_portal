@@ -67,36 +67,71 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./docker/dockerfiles/Dockerfile.local
+    environment:
+#      DJANGO_SETTINGS_MODULE: settings.settings.local
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
     volumes:
       - ./:/clients_portal
       - ./logs:/clients_portal/logs/
       - ./src/static:/clients_portal/src/static/
       - ./src/media:/clients_portal/src/media/
     ports:
-      - 8025:8025
+      - 8025:8000
     links:
       - db
-#      - celery
+      - redis
     image: app:django
     container_name: clients_portal_web
     command: >
-      sh -c "./wait-for-it.sh db:5432 -- sh ./entrypoint-web.sh"
+      sh -c "./docker/wait-for-it.sh db:5432 -- sh ./docker/backend/entrypoint-web.sh"
     depends_on:
       db:
         condition: service_healthy
-
 
   # Celery
   celery:
     restart: always
     build:
       context: .
-#    command: celery -A clients_portal worker -l INFO
+      dockerfile: ./docker/dockerfiles/Dockerfile.local
+    environment:
+#      DJANGO_SETTINGS_MODULE: settings.settings.local
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    command: >
+      sh -c "./docker/wait-for-it.sh db:5432 -- sh ./docker/backend/entrypoint-worker.sh"
     volumes:
       - .:/clients_portal
     container_name: clients_portal_celery
+    links:
+      - redis
     depends_on:
       - db
       - redis
       - web
+
+  # Flower
+  flower:
+    build:
+      context: .
+      dockerfile: ./docker/dockerfiles/Dockerfile.local
+    environment:
+#      DJANGO_SETTINGS_MODULE: settings.settings.local
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    command: >
+      sh -c "./docker/wait-for-it.sh db:5432 -- sh ./docker/backend/entrypoint-flower.sh"
+    volumes:
+      - .:/clients_portal
+    ports:
+      - 5555:5555
+    links:
+      - redis
+      - celery
+    container_name: clients_portal_flower
+    depends_on:
+      - web
+      - redis
+      - celery
