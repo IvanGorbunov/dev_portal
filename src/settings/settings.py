@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'apps.products',
     'apps.store',
     'apps.article',
+    'apps.vacancy',
 
     'drf_yasg',
     'debug_toolbar',
