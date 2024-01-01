@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'django_bootstrap5',
+    'django_celery_results',
+    'django_celery_beat',
 
     'crispy_forms',
     'crispy_bootstrap5',
@@ -239,11 +241,12 @@ REDIS_PORT = env.str('REDIS_PORT', '6379')
 
 CACHES = {
         'default': {
-            'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0',
-            'OPTIONS': {
-                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            },
+            # 'BACKEND': 'django_redis.cache.RedisCache',
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/1',
+            # 'OPTIONS': {
+            #     'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            # },
         }
 }
 # endregion
@@ -251,15 +254,20 @@ CACHES = {
 # region Celery
 CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
-CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 CELERY_ACCEPT_CONTENT = env.list('CELERY_ACCEPT_CONTENT', default=['application/json'])
 CELERY_TASK_SERIALIZER = env.str('CELERY_TASK_SERIALIZER', 'json')
+CELERY_CACHE_BACKEND = 'default'
+# CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_RESULT_BACKEND = 'django-db'
 CELERY_RESULT_SERIALIZER = env.str('CELERY_RESULT_SERIALIZER', 'json')
 CELERY_TIMEZONE = env.str('CELERY_TIMEZONE', 'Europe/Moscow')
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 # endregion
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=['http://192.168.89.58/',])
 
 if DEBUG:
     import socket

@@ -42,20 +42,20 @@ class TestModels(CustomViewTestCase):
 
         # проверим статус по умолчанию
         request = ClientsRequest.objects.filter(author=self.client_1).first()
-        self.assertEquals(request.status, StatusClientsRequest.NEW)
+        self.assertEqual(request.status, StatusClientsRequest.NEW)
 
         # проверим статус в истории по умолчанию
         history = ClientsRequestHistory.objects.filter(clients_request=self.clients_request).order_by('-date').first()
-        self.assertEquals(history.status, StatusClientsRequest.NEW)
+        self.assertEqual(history.status, StatusClientsRequest.NEW)
 
         # проверим установку нового статуса в истории
         self.clients_request.status = StatusClientsRequest.PENDING
         self.clients_request.save()
 
         history = ClientsRequestHistory.objects.filter(clients_request=self.clients_request).order_by('-date').first()
-        self.assertEquals(history.status, StatusClientsRequest.PENDING)
+        self.assertEqual(history.status, StatusClientsRequest.PENDING)
 
     def test_clients_request_delete(self):
         self.clients_request.destroy()
         request = ClientsRequest.objects.filter(pk=self.clients_request.id).first()
-        self.assertEquals(request.is_delete, True)
+        self.assertEqual(request.is_delete, True)
