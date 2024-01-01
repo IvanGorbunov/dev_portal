@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.utils.translation import gettext_lazy as _
 
+from apps.vacancy.choices import VacancyStatus
 from apps.vacancy.models import Vacancy, HR, TestProject, Position, Language, Country, Company, Currency
 
 
@@ -18,6 +19,7 @@ class VacancyAdmin(ModelAdmin):
         'language',
         'country',
         'status',
+        'intensity',
         'resume_sent_dt',
         'interview_dt',
         'published_dt',
@@ -31,6 +33,7 @@ class VacancyAdmin(ModelAdmin):
         'position',
         'company',
         'currency',
+        'intensity',
     )
     search_fields = (
         'position',
@@ -49,6 +52,7 @@ class VacancyAdmin(ModelAdmin):
                     'country',
                     'company',
                     'language',
+                    'intensity',
                 )
             }
         ),
@@ -88,6 +92,15 @@ class VacancyAdmin(ModelAdmin):
     ordering = (
         '-id',
     )
+    actions = (
+        'set_status_old',
+    )
+
+    @admin.action(description=_('Set status - old'))
+    def set_status_old(self, request, queryset):
+        for i in queryset:
+            i.status = VacancyStatus.OLD
+            i.save()
 
 
 @admin.register(HR)

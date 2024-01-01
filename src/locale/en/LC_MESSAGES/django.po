@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-07 06:04+0000\n"
+"POT-Creation-Date: 2023-12-29 11:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,7 @@ msgid "On approval"
 msgstr ""
 
 #: apps/article/choices.py:65 apps/vacancy/choices.py:27
-#: apps/vacancy/choices.py:66
+#: apps/vacancy/choices.py:68
 msgid "Rejected"
 msgstr ""
 
@@ -98,7 +98,7 @@ msgstr ""
 #: apps/store/models.py:13 apps/vacancy/models.py:13 apps/vacancy/models.py:31
 #: apps/vacancy/models.py:45 apps/vacancy/models.py:60
 #: apps/vacancy/models.py:76 apps/vacancy/models.py:89
-#: apps/vacancy/models.py:104 apps/vacancy/models.py:137
+#: apps/vacancy/models.py:104 apps/vacancy/models.py:138
 msgid "Deleted"
 msgstr ""
 
@@ -107,7 +107,7 @@ msgid "Trade secret"
 msgstr ""
 
 #: apps/article/models.py:41 apps/clients_requests/models.py:16
-#: apps/clients_requests/models.py:82 apps/vacancy/admin.py:77
+#: apps/clients_requests/models.py:82 apps/vacancy/admin.py:81
 msgid "Description"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgstr ""
 #: apps/article/models.py:43 apps/clients/models.py:18
 #: apps/clients_requests/forms.py:12 apps/clients_requests/forms.py:34
 #: apps/clients_requests/models.py:19 apps/clients_requests/models.py:58
-#: apps/vacancy/models.py:27 apps/vacancy/models.py:130
+#: apps/vacancy/models.py:27 apps/vacancy/models.py:131
 msgid "Status"
 msgstr ""
 
@@ -190,7 +190,7 @@ msgid "Pending"
 msgstr ""
 
 #: apps/clients_requests/choices.py:24 apps/vacancy/choices.py:23
-#: apps/vacancy/choices.py:64
+#: apps/vacancy/choices.py:66
 msgid "New"
 msgstr ""
 
@@ -300,20 +300,24 @@ msgstr ""
 msgid "Password is must !"
 msgstr ""
 
-#: apps/vacancy/admin.py:45
+#: apps/vacancy/admin.py:48
 msgid "Base info"
 msgstr ""
 
-#: apps/vacancy/admin.py:56 apps/vacancy/models.py:123
+#: apps/vacancy/admin.py:60 apps/vacancy/models.py:124
 msgid "Salary"
 msgstr ""
 
-#: apps/vacancy/admin.py:65
+#: apps/vacancy/admin.py:69
 msgid "Status info"
 msgstr ""
 
-#: apps/vacancy/admin.py:82
+#: apps/vacancy/admin.py:86
 msgid "Projects"
+msgstr ""
+
+#: apps/vacancy/admin.py:99
+msgid "Set status - old"
 msgstr ""
 
 #: apps/vacancy/choices.py:24
@@ -324,51 +328,55 @@ msgstr ""
 msgid "On checking"
 msgstr ""
 
-#: apps/vacancy/choices.py:65
+#: apps/vacancy/choices.py:67
 msgid "Resume sent"
 msgstr ""
 
-#: apps/vacancy/choices.py:67
+#: apps/vacancy/choices.py:69
 msgid "Invited to an interview"
 msgstr ""
 
-#: apps/vacancy/choices.py:68
+#: apps/vacancy/choices.py:70
 msgid "Received task"
 msgstr ""
 
-#: apps/vacancy/choices.py:69
+#: apps/vacancy/choices.py:71
 msgid "Completed task"
 msgstr ""
 
-#: apps/vacancy/choices.py:70
+#: apps/vacancy/choices.py:72
 msgid "Task sent"
 msgstr ""
 
-#: apps/vacancy/choices.py:71
+#: apps/vacancy/choices.py:73
 msgid "Passed"
 msgstr ""
 
-#: apps/vacancy/choices.py:93
-msgid "A1"
-msgstr ""
-
-#: apps/vacancy/choices.py:94
-msgid "A2"
-msgstr ""
-
-#: apps/vacancy/choices.py:95
-msgid "B1"
+#: apps/vacancy/choices.py:74
+msgid "Old"
 msgstr ""
 
 #: apps/vacancy/choices.py:96
-msgid "B2"
+msgid "A1"
 msgstr ""
 
 #: apps/vacancy/choices.py:97
-msgid "C1"
+msgid "A2"
 msgstr ""
 
 #: apps/vacancy/choices.py:98
+msgid "B1"
+msgstr ""
+
+#: apps/vacancy/choices.py:99
+msgid "B2"
+msgstr ""
+
+#: apps/vacancy/choices.py:100
+msgid "C1"
+msgstr ""
+
+#: apps/vacancy/choices.py:101
 msgid "C2"
 msgstr ""
 
@@ -400,7 +408,7 @@ msgstr ""
 msgid "Language level"
 msgstr ""
 
-#: apps/vacancy/models.py:63 apps/vacancy/models.py:121
+#: apps/vacancy/models.py:63 apps/vacancy/models.py:122
 msgid "Language"
 msgstr ""
 
@@ -416,7 +424,7 @@ msgstr ""
 msgid "Countries"
 msgstr ""
 
-#: apps/vacancy/models.py:92 apps/vacancy/models.py:125
+#: apps/vacancy/models.py:92 apps/vacancy/models.py:126
 msgid "Currency"
 msgstr ""
 
@@ -432,27 +440,31 @@ msgstr ""
 msgid "Companies"
 msgstr ""
 
-#: apps/vacancy/models.py:124
+#: apps/vacancy/models.py:120
+msgid "Hiring intensity"
+msgstr ""
+
+#: apps/vacancy/models.py:125
 msgid "Salary (max)"
 msgstr ""
 
-#: apps/vacancy/models.py:128
+#: apps/vacancy/models.py:129
 msgid "Test projects"
 msgstr ""
 
-#: apps/vacancy/models.py:140
+#: apps/vacancy/models.py:141
 msgid "Vacancy"
 msgstr ""
 
-#: apps/vacancy/models.py:141
+#: apps/vacancy/models.py:142
 msgid "Vacancies"
 msgstr ""
 
-#: settings/settings.py:197
+#: settings/settings.py:199
 msgid "English"
 msgstr ""
 
-#: settings/settings.py:198
+#: settings/settings.py:200
 msgid "Russian"
 msgstr ""
 

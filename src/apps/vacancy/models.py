@@ -117,6 +117,7 @@ class Vacancy(models.Model):
     description = models.TextField(blank=True, null=True)
     country = models.ForeignKey(Country, verbose_name=_('Country'), related_name='vacancies', blank=True, null=True, on_delete=models.PROTECT)
     company = models.ForeignKey(Company, verbose_name=_('Company'), related_name='vacancies', blank=True, null=True, on_delete=models.PROTECT)
+    intensity = models.IntegerField(verbose_name=_('Hiring intensity'), default=1)
 
     language = models.ForeignKey(Language, verbose_name=_('Language'), related_name='vacancies', blank=True, null=True, on_delete=models.PROTECT)
 

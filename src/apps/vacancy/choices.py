@@ -48,6 +48,7 @@ class VacancyStatus:
     COMPLETED_TASK = 'completed_task'
     TASK_SENT = 'task_sent'
     PASSED = 'passed'
+    OLD = 'old'
 
     ITEMS = (
         NEW,
@@ -58,6 +59,7 @@ class VacancyStatus:
         COMPLETED_TASK,
         TASK_SENT,
         PASSED,
+        OLD,
     )
 
     CHOICES = (
@@ -69,6 +71,7 @@ class VacancyStatus:
         (COMPLETED_TASK, _('Completed task')),
         (TASK_SENT, _('Task sent')),
         (PASSED, _('Passed')),
+        (OLD, _('Old')),
     )
 
 
