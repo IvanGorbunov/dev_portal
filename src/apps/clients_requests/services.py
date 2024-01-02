@@ -21,12 +21,12 @@ class ClientsRequestsListMixin:
         qs = qs.annotate(clients_phone=F('author__phone'))
         qs = qs.annotate(clients_email=F('author__email'))
         qs = qs.annotate(product_name=F('product__name'))
-        qs = qs.order_by('-create_dt')
+        qs = qs.order_by('-created_at')
         if date:
             date = date.split('.')
-            qs = qs.filter(create_dt__day=date[0])
-            qs = qs.filter(create_dt__month=date[1])
-            qs = qs.filter(create_dt__year=date[2])
+            qs = qs.filter(created_at__day=date[0])
+            qs = qs.filter(created_at__month=date[1])
+            qs = qs.filter(created_at__year=date[2])
         if status:
             qs = qs.filter(status=status)
         if product:

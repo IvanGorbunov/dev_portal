@@ -3,7 +3,7 @@ from django.contrib.admin import ModelAdmin, TabularInline
 from django.utils.translation import gettext_lazy as _
 from django_filters import DateRangeFilter
 
-from .models import ClientsRequest, ClientsRequestHistory, ClientsRequestAttachment
+from .models import ClientsRequest, ClientsRequestAttachment
 
 
 class ClientsRequestAttachmentInline(TabularInline):
@@ -21,7 +21,7 @@ class ClientsRequestAdmin(ModelAdmin):
         'id',
         'title',
         'author',
-        'create_dt',
+        'created_at',
         'status',
         'is_delete',
     )
@@ -31,7 +31,7 @@ class ClientsRequestAdmin(ModelAdmin):
     )
     list_filter = (
         'status',
-        'create_dt',
+        'created_at',
         'is_delete',
     )
     list_per_page = 25
@@ -39,30 +39,7 @@ class ClientsRequestAdmin(ModelAdmin):
         'id',
         'title',
     )
-
-
-@admin.register(ClientsRequestHistory)
-class ClientsHistoryAdmin(ModelAdmin):
-    list_display = (
-        'id',
-        'date',
-        'clients_request',
-        'user',
-        'status',
-    )
-    list_filter = (
-        'date',
-        'user',
-    )
-    search_fields = (
-        'clients_request',
-        'user',
-    )
-    list_per_page = 25
-    list_display_links = (
-        'id',
-        'clients_request',
-    )
+    readonly_fields = ('created_at', 'updated_at',)
 
 
 @admin.register(ClientsRequestAttachment)

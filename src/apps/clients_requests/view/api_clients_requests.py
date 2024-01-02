@@ -20,7 +20,7 @@ class ClientsRequestsViewSet(viewsets.GenericViewSet,
     permission_classes = [IsAuthenticatedOrReadOnly, ]
     search_fields = [
         'title',
-        'create_dt',
+        'created_at',
         'status',
         'phone',
         'email',

@@ -82,7 +82,7 @@
                 {% endif %}
                     <a href="{% url 'clients_requests:clients-request-update' clients_request.id %}"> {{clients_request.id|safe}}</a>
                 </td>
-                <td>{{ clients_request.create_dt|date:"d.m.Y H:i:s" }}</td>
+                <td>{{ clients_request.created_at|date:"d.m.Y H:i:s" }}</td>
                 <td>{{ clients_request.client_name|safe }}</td>
                 <td>{{ clients_request.inn|safe }}</td>
                 <td>{{ clients_request.product_name|safe }}</td>

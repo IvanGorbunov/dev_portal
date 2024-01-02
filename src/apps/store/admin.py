@@ -11,8 +11,8 @@ class PriceListAdmin(ModelAdmin):
         'title',
         'counter',
         'is_active',
-        'created',
-        'updated',
+        'created_at',
+        'updated_at',
     )
     search_fields = (
         'title',
@@ -25,3 +25,4 @@ class PriceListAdmin(ModelAdmin):
         'id',
         'title',
     )
+    readonly_fields = ('created_at', 'updated_at',)

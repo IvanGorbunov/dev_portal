@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
 
     'apps.users.apps.UsersConfig',
+    'apps.changelog',
     'apps.clients',
     'apps.clients_requests',
     'apps.products',
@@ -77,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.changelog.middleware.LoggedInUserMiddleware',
 ]
 if SQL_DEBUG:
     MIDDLEWARE = MIDDLEWARE + ['utils.middleware.DebugQuerysetsWare']

@@ -27,8 +27,8 @@ class ClientsRequestListSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'content',
-            'create_dt',
-            'update_dt',
+            'created_at',
+            'updated_at',
             'status',
             'author',
             'product',
@@ -42,10 +42,10 @@ class ClientsRequestListSerializer(serializers.ModelSerializer):
         )
 
     def get_create_dt(self, clients_request: ClientsRequest):
-        return clients_request.create_dt.strftime("%d.%m.%Y %H:%M:%S")
+        return clients_request.created_at.strftime("%d.%m.%Y %H:%M:%S")
 
     def get_update_dt(self, clients_request: ClientsRequest):
-        return clients_request.update_dt.strftime("%d.%m.%Y %H:%M:%S")
+        return clients_request.updated_at.strftime("%d.%m.%Y %H:%M:%S")
 
 
 class ClientsRequestDetailSerializer(AuthorMixin, serializers.ModelSerializer):
