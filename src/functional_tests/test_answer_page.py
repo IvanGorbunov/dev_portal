@@ -11,11 +11,11 @@ class TestProjectListPage(StaticLiveServerTestCase):
 
     def setUp(self):
         chrome_options = webdriver.ChromeOptions()
-        # chrome_options.add_argument('--no-sandbox')
-        # chrome_options.add_argument('--window-size=1420,1080')
-        # chrome_options.add_argument('--headless')
-        # chrome_options.add_argument('--disable-gpu')
-        self.browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--window-size=1420,1080')
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--disable-gpu')
+        self.browser = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
 
     def tearDown(self):
         self.browser.quit()
