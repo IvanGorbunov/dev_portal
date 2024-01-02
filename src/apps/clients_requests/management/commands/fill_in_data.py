@@ -57,8 +57,3 @@ class Command(BaseCommand):
                         author_id=client.id,
                         product_id=product.id,
                     )
-
-
-
-
-
