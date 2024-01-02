@@ -15,7 +15,7 @@ class ChangeloggableMixin(models.Model):
         self._original_values = {}
         for field in self._meta.fields:
 
-            if type(field) == fields.related.ForeignKey:
+            if isinstance(field, fields.related.ForeignKey):
                 self._original_values[field.name] = (
                     getattr(self, f'{field.name}_id')
                 )
@@ -38,7 +38,7 @@ class ChangeloggableMixin(models.Model):
 
                 # Дополнительная проверка для полей Foreign Key
                 if self._meta.get_field(name).get_internal_type() == (
-                    'ForeignKey'
+                        'ForeignKey'
                 ):
                     if value != getattr(self, f'{name}_id'):
                         result.update(temp)
