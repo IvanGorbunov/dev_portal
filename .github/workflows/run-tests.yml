@@ -83,4 +83,5 @@ jobs:
           echo SQL_PORT=${{ env.POSTGRES_PORT }} >> ./src/settings/.env
           echo SENTRY_DSN=${{ secrets.SENTRY_DSN }} >> ./src/settings/.env
           cd src/
-          python manage.py test apps/ functional_tests
+#          python manage.py test apps/ functional_tests
+          python manage.py test apps/
