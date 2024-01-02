@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 
-from .models import Client, ClientsHistory
+from .models import Client
 
 
 @admin.register(Client)
@@ -32,27 +32,4 @@ class ClientAdmin(ModelAdmin):
         'id',
         'name',
     )
-
-
-@admin.register(ClientsHistory)
-class ClientsHistoryAdmin(ModelAdmin):
-    list_display = (
-        'id',
-        'date',
-        'client',
-        'user',
-        'values',
-    )
-    list_filter = (
-        'date',
-        'user',
-    )
-    search_fields = (
-        'client',
-        'user',
-    )
-    list_per_page = 25
-    list_display_links = (
-        'id',
-        'client',
-    )
+    readonly_fields = ('created_at',)

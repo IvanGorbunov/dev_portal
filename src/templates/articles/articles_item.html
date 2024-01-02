@@ -1,0 +1,27 @@
+{% extends '../base.html' %}
+{% load django_bootstrap5 %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% block title %}Статья{% endblock%}
+
+{% block content %}
+
+    {% if error_message %}
+          <div class="alert alert-primary" role="alert">
+            {{error_message}}
+          </div>
+    {% endif %}
+
+    <h1>Продукт</h1>
+    <hr>
+
+    <form action="{% url 'articles:article-update' object.pk %}" method="post" novalidate>
+        {% csrf_token %}
+        {#{% bootstrap_form form %}#}
+        {{ form|crispy }}
+        {% bootstrap_button button_type="submit" content="Сохранить" %}
+
+    </form>
+{% endblock %}

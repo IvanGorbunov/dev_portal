@@ -53,14 +53,20 @@ INSTALLED_APPS = [
     'django_filters',
     'django_bootstrap5',
 
+    'crispy_forms',
+    'crispy_bootstrap5',
+
     'apps.users.apps.UsersConfig',
+    'apps.changelog',
     'apps.clients',
     'apps.clients_requests',
     'apps.products',
+    'apps.store',
+    'apps.article',
 
     'drf_yasg',
     'debug_toolbar',
-    'crispy_forms',
+
 ]
 
 MIDDLEWARE = [
@@ -72,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.changelog.middleware.LoggedInUserMiddleware',
 ]
 if SQL_DEBUG:
     MIDDLEWARE = MIDDLEWARE + ['utils.middleware.DebugQuerysetsWare']
@@ -91,6 +98,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.store.context_processors.price_list',
             ],
         },
     },
@@ -140,7 +148,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 100,
+    'PAGE_SIZE': 10,
     'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
     'DATETIME_FORMAT': "%d.%m.%Y %H:%M:%S",
 }
@@ -251,7 +259,8 @@ CELERY_RESULT_SERIALIZER = env.str('CELERY_RESULT_SERIALIZER', 'json')
 CELERY_TIMEZONE = env.str('CELERY_TIMEZONE', 'Europe/Moscow')
 # endregion
 
-CRISPY_TEMPLATE_PACK = 'bootstrap'
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 if DEBUG:
     import socket

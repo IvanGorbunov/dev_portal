@@ -176,5 +176,7 @@ __pycache__
 /media/
 /var/
 
+*.sqlite3
+
 
 

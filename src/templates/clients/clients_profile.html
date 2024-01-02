@@ -1,5 +1,6 @@
 {% extends '../base.html' %}
 {% load django_bootstrap5 %}
+{% load crispy_forms_tags %}
 {% load static %}
 
 
@@ -31,7 +32,8 @@
 
                     <form action="{% url 'clients:profile' object.pk %}" method="post" class="form">
                         {% csrf_token %}
-                        {% bootstrap_form form %}
+{#                        {% bootstrap_form form %}#}
+                        {{ form|crispy }}
 
 
                         <div class="py-5 d-flex justify-content-end">

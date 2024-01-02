@@ -24,8 +24,8 @@ class ExportClientsRequest:
             ('Телефон', lambda item: item.phone),
             ('E-mail', lambda item: item.email),
             ('Продукт', lambda item: item.product_name),
-            ('Дата создания', lambda item: item.create_dt.strftime("%d.%m.%Y %H:%M:%S")),
-            ('Дата изменения', lambda item: item.update_dt.strftime("%d.%m.%Y %H:%M:%S")),
+            ('Дата создания', lambda item: item.created_at.strftime("%d.%m.%Y %H:%M:%S")),
+            ('Дата изменения', lambda item: item.updated_at.strftime("%d.%m.%Y %H:%M:%S")),
             ('Статус', lambda item: str(status.get(item.status))),
         )
 

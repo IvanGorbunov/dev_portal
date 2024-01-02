@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from .view import views
 
 app_name = 'clients_requests'
 

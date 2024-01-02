@@ -8,7 +8,8 @@ from .yasg import urlpatterns as doc_url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('settings.urls_api')),
+    path('', include('settings.urls_ui')),
+    path('api/', include('settings.urls_api')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + doc_url
 
 if settings.DEBUG:

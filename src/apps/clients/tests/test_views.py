@@ -2,8 +2,7 @@ from django.test import TestCase
 from django.urls import reverse_lazy
 
 from apps.clients.tests.factories import ClientFactory
-from apps.clients_requests.choices import StatusClientsRequest
-from apps.clients_requests.models import ClientsRequest, ClientsRequestHistory
+
 from apps.clients_requests.tests.factories import ClientsRequestFactory
 from apps.users.choices import UserRole
 from apps.users.tests.factories import UserFactory
