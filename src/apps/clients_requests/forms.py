@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ..clients.models import Client
 from .choices import StatusClientsRequest
-from .models import ClientsRequest
+from .models import ClientsRequest, ClientsRequestAttachment
 from ..products.models import Product
 
 
@@ -37,3 +37,9 @@ class ClientsRequestItemAdminForm(forms.ModelForm):
     class Meta:
         model = ClientsRequest
         fields = '__all__'
+
+
+class ClientsRequestAttachmentForm(forms.ModelForm):
+    class Meta:
+        model = ClientsRequestAttachment
+        fields = ['attach_file']

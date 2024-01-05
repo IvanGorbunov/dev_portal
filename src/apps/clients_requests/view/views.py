@@ -147,7 +147,7 @@ class ClientsRequestAddAttachmentView(LoginRequiredMixin, MultiSerializerViewSet
         attachment = ClientsRequestAttachment.objects.create(
             clients_request=pk,
             name=file.name,
-            file=file.read()
+            attach_file=file.read()
         )
 
         return reverse('clients-request-update', args=(pk,))

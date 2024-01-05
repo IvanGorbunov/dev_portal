@@ -54,7 +54,7 @@ def update_clients_request(self, args, kwargs, request):
             for file in files:
                 max_num = ClientsRequestAttachment.objects.aggregate(Max('order_num'))['order_num__max']
                 ClientsRequestAttachment.objects.create(order_num=max_num + 1, clients_request=clients_request,
-                                                        name=file.name, file=file)
+                                                        name=file.name, attach_file=file)
 
 
 def add_attachments(clients_request: ClientsRequest, files: list):
@@ -62,4 +62,4 @@ def add_attachments(clients_request: ClientsRequest, files: list):
         for file in files:
             max_num = ClientsRequestAttachment.objects.aggregate(Max('order_num'))['order_num__max']
             ClientsRequestAttachment.objects.create(order_num=max_num + 1, clients_request=clients_request,
-                                                    name=file.name, file=file)
+                                                    name=file.name, attach_file=file)
