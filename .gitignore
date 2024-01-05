@@ -173,7 +173,8 @@ __pycache__
 
 /data/
 
-/media/
+/src/media/*
+/src/media/attachments/*
 /var/
 
 *.sqlite3
