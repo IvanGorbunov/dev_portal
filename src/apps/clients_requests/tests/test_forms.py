@@ -16,7 +16,6 @@ class ClientsRequestItemFormTest(CustomViewTestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.user_client_1 = UserFactory(
-            username='IvanovII',
             fio='Иванов Иван Иванович',
             role=UserRole.CLIENT,
             is_staff=False,
@@ -27,27 +26,30 @@ class ClientsRequestItemFormTest(CustomViewTestCase):
             name='ИП Иванов Иван Иванович',
         )
 
-    def test_form_field_status(self):
-        self.client.login(username='IvanovII', password='adm1n')
+    def setUp(self) -> None:
+        super().setUp()
 
-        form = ClientsRequestItemForm(user=get_user(self.client))
+    def test_form_field_status(self):
+        self.auth_user(self.user_client_1)
+
+        form = ClientsRequestItemForm(user=self.user_client_1)
         self.assertTrue('status' in form.fields)
         self.assertTrue(form.fields['status'].widget.is_hidden)
         self.assertFalse(form.fields['status'].show_hidden_initial)
         self.assertEqual(form.fields['status'].initial, StatusClientsRequest.NEW)
 
     def test_form_field_is_delete(self):
-        self.client.login(username='IvanovII', password='adm1n')
+        self.auth_user(self.user_client_1)
 
-        form = ClientsRequestItemForm(user=get_user(self.client))
+        form = ClientsRequestItemForm(user=self.user_client_1)
         self.assertTrue('is_delete' in form.fields)
         self.assertTrue(form.fields['is_delete'].widget.is_hidden)
         self.assertFalse(form.fields['is_delete'].show_hidden_initial)
 
     def test_form_field_author(self):
-        self.client.login(username='IvanovII', password='adm1n')
+        self.auth_user(self.user_client_1)
 
-        form = ClientsRequestItemForm(user=get_user(self.client))
+        form = ClientsRequestItemForm(user=self.user_client_1)
         self.assertTrue('author' in form.fields)
         self.assertTrue(form.fields['author'].widget.is_hidden)
         self.assertFalse(form.fields['author'].show_hidden_initial)

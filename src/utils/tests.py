@@ -31,7 +31,7 @@ class WithLoginTestCase(TestCaseBase):
     """
     @classmethod
     def setUpClass(cls):
-        user, is_create = User.objects.get_or_create(username='admin')
+        user, is_create = User.objects.get_or_create(email='admin@example.com')
         if is_create:
             user.role = UserRole.SUPER_ADMIN
             user.set_password('admin')
@@ -46,9 +46,9 @@ class WithLoginTestCase(TestCaseBase):
         self.auth_user(self.user)
         super().setUp()
 
-    def auth_user(self, user):
+    def auth_user(self, user: User, email: str = None, password: str = None):
         """
-        Авторизация
+        Authorization
         """
         self.client.force_authenticate(user)
 

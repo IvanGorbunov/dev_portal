@@ -25,7 +25,6 @@ class Command(BaseCommand):
         for i in range(17, 10000):
             with transaction.atomic():
                 user = User.objects.create_user(
-                    username=f'User {str(i).zfill(6)}',
                     email=f'user_{str(i).zfill(6)}@example.com',
                 )
                 product = Product.objects.create(name=f'Product {str(i).zfill(6)}')

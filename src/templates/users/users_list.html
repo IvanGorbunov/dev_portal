@@ -42,7 +42,7 @@
                 <td>
                     <a href="{% url profile_url current_user.id %}"> {{current_user.id|safe}}</a>
                 </td>
-                <td>{{ current_user.username|safe }}</td>
+                <td>{{ current_user.email|safe }}</td>
                 <td>{{ current_user.fio|safe }}</td>
                 <td>{{ current_user.phone|safe }}</td>
                 <td>{{ current_user.email|safe }}</td>

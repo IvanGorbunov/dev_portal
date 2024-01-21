@@ -18,10 +18,9 @@ django-admin makemessages --all --ignore=venv
 django-admin compilemessages --ignore=venv
 
 # User credentials
-user=admin
 email=admin@example.com
 password=admin123
-echo "from apps.users.models import User; (User.objects.create_superuser('$user', '$email', '$password', role='super_admin')) if not User.objects.filter(role='super_admin').exists() else False" | python3 manage.py shell
+echo "from apps.users.models import User; (User.objects.create_superuser(email='$email', password='$password', role='super_admin', is_active=True)) if not User.objects.filter(role='super_admin').exists() else False" | python3 manage.py shell
 
 # Запуск воркеров по очередям
 celery -A settings multi start --beat w.no_queue w.low w.high w.flow --loglevel=info --logfile=../logs/%n.log --pidfile=../pids/%n.pid -Q:w.high high -Q:w.low low -Q:w.flow flow
@@ -30,6 +29,6 @@ celery -A settings multi start --beat w.no_queue w.low w.high w.flow --loglevel=
 
 # Запуск самого проекта
 #gunicorn clients_portal.wsgi:application --chdir /clients_portal/src/ --bind 0.0.0.0:8000 --workers 2 --timeout 900 --error-logfile ../logs/gunicorn_web_error.log
-python3 manage.py runserver 0.0.0.0:8025
+python3 manage.py runserver 0.0.0.0:8000
 
 exec "$@"
