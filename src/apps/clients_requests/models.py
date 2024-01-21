@@ -44,6 +44,9 @@ class ClientsRequest(ChangeloggableMixin, DateModelMixin, models.Model):
         self.is_delete = True
         self.save()
 
+    def delete_marked(self):
+        self.objects.filter(is_delete=True).delete()
+
 # region Attachments
 
 

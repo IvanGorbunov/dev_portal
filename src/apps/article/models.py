@@ -59,6 +59,9 @@ class Article(DateModelMixin, models.Model):
         self.is_delete = True
         self.save()
 
+    def delete_marked(self):
+        self.objects.filter(is_delete=True).delete()
+
     def is_project(self):
         """
         Type: 'Project'
