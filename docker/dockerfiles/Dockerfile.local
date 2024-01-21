@@ -8,7 +8,7 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /clients_portal
 
 # install dependences
-COPY ./requirements.txt /clients_portal/requirements.txt
+COPY ../../requirements.txt /clients_portal/requirements.txt
 RUN python3 -m pip install --upgrade pip
 RUN pip3 install -r /clients_portal/requirements.txt
 

@@ -11,7 +11,6 @@ class UserViewTest(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.user_admin = UserFactory(
-            username='adm1n',
             password='adm1n',
             is_superuser=True,
             is_staff=True,
@@ -20,5 +19,5 @@ class UserViewTest(TestCase):
 
     def test_login(self):
         self.assertFalse(get_user(self.client).is_authenticated)
-        self.client.login(username='adm1n', password='adm1n')
+        self.client.login(email=self.user_admin.email, password='adm1n')
         self.assertTrue(get_user(self.client).is_authenticated)

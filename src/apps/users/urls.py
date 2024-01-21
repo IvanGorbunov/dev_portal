@@ -16,7 +16,7 @@ urlpatterns = [
     path('stuffs/', views.StuffListView.as_view(), name='stuffs-list'),
     path('stuffs/<int:pk>/', views.StuffUpdateView.as_view(), name='stuff-profile'),
 
-    path('register/', views.RegisterViewSet.as_view(), name='register'),
+    path('register/', views.RegisterView.as_view(), name='register'),
 
     path('accounts/', include('django.contrib.auth.urls')),
 ]

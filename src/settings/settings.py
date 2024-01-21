@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import logging
 
 import environ
 import os
@@ -20,6 +21,8 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 environ.Env.read_env()
+
+logging.basicConfig(level=env.str('DJANGO_LOG_LEVEL', default=logging.INFO), format='%(asctime)s - %(levelname)s: %(message)s', datefmt='%H:%M:%S')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -162,18 +165,40 @@ LOGIN_URL = 'users:index'
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
+MIN_PASSWORD_LENGTH = 8
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': MIN_PASSWORD_LENGTH,
+        },
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+    {
+        'NAME': 'utils.validators.NumberValidator',
+        'OPTIONS': {
+            'min_digits': 1,
+        },
+    },
+    {
+        'NAME': 'utils.validators.UppercaseValidator',
+    },
+    {
+        'NAME': 'utils.validators.LowercaseValidator',
+    },
+    {
+        'NAME': 'utils.validators.DontRepeatValidator',
+        'OPTIONS': {
+            'history': 10,
+        },
     },
 ]
 

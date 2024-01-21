@@ -10,9 +10,8 @@ class UserFactory(DjangoModelFactory):
     Фабрика Пользователя
     """
 
-    username = FuzzyText(length=12)
     password = PostGenerationMethodCall('set_password', 'adm1n')
-    email = FuzzyText(length=12, suffix='_a@example.com')
+    email = FuzzyText(length=15, suffix='_a@example.com')
     fio = FuzzyText(length=25)
 
     class Meta:

@@ -15,7 +15,6 @@ class ClientViewTest(CustomViewTestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.user_client_1 = UserFactory(
-                username='IvanovII',
                 fio='Иванов Иван Иванович',
                 role=UserRole.CLIENT,
                 is_staff=False,
@@ -26,7 +25,6 @@ class ClientViewTest(CustomViewTestCase):
             name='ИП Иванов Иван Иванович',
         )
         cls.user_admin = UserFactory(
-            username='AdminAA',
             fio='Admin Admin Admin',
             role=UserRole.ADMIN,
             is_superuser=True,
