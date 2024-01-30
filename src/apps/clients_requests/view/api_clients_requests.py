@@ -16,7 +16,7 @@ class ClientsRequestsViewSet(viewsets.GenericViewSet,
     serializer_class = ClientsRequestListSerializer
     filter_backends = (
         DjangoFilterBackend, filters.SearchFilter)
-    # filterset_class = TransactionFilter
+
     permission_classes = [IsAuthenticatedOrReadOnly, ]
     search_fields = [
         'title',

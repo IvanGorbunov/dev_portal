@@ -12,7 +12,8 @@ from apps.clients_requests.choices import StatusClientsRequest
 from apps.clients_requests.excel import ExportClientsRequest
 from apps.clients_requests.forms import ClientsRequestItemForm, ClientsRequestItemAdminForm
 from apps.clients_requests.models import ClientsRequest, ClientsRequestAttachment
-from apps.clients_requests.services import update_clients_request, ClientsRequestsListMixin, add_attachments
+from apps.clients_requests.selectors import ClientsRequestsListMixin
+from apps.clients_requests.services import add_attachments
 from apps.users.choices import UserRole
 from utils.views import DataMixin, ContextDataMixin, MultiSerializerViewSet
 
