@@ -41,7 +41,7 @@ DEBUG = env.bool('DEBUG', False)
 SQL_DEBUG = env.bool('SQL_DEBUG', False)
 
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['*'])
-
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=['http://localhost'])
 
 # Application definition
 
@@ -260,28 +260,38 @@ EMAIL_ADR_REGISTRATION = env.str('EMAIL_ADR_REGISTRATION', None)
 # endregion
 
 # region Redis
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
 REDIS_HOST = env.str('REDIS_HOST', 'redis')
 REDIS_PORT = env.str('REDIS_PORT', '6379')
+REDIS_DB = "0"
+
+RUN_IN_DOCKER = env.bool('RUN_IN_DOCKER', False)
+if not RUN_IN_DOCKER:
+    REDIS_HOST = env.str('REDIS_HOST_LOCAL', '6379')
+    REDIS_PORT = env.str('REDIS_PORT_LOCAL', '6379')
 
 CACHES = {
         'default': {
-            'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0',
-            'OPTIONS': {
-                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            },
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/1',
         }
 }
 # endregion
 
 # region Celery
-CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'  #env.str('CELERY_BROKER_URL')
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'  # env.str('CELERY_BROKER_URL', 'redis://redis:6379/0')
 CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
-CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
-CELERY_ACCEPT_CONTENT = env.list('CELERY_ACCEPT_CONTENT', default=['application/json'])
-CELERY_TASK_SERIALIZER = env.str('CELERY_TASK_SERIALIZER', 'json')
-CELERY_RESULT_SERIALIZER = env.str('CELERY_RESULT_SERIALIZER', 'json')
-CELERY_TIMEZONE = env.str('CELERY_TIMEZONE', 'Europe/Moscow')
+CELERY_CACHE_BACKEND = 'default'
+# CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'   # env.str('CELERY_RESULT_BACKEND', 'redis://redis:6379/0')
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = env.list('CELERY_ACCEPT_CONTENT')
+CELERY_TASK_SERIALIZER = env.str('CELERY_TASK_SERIALIZER', '')
+CELERY_RESULT_SERIALIZER = env.str('CELERY_RESULT_SERIALIZER', '')
+CELERY_TIMEZONE = env.str('CELERY_TIMEZONE', '')
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 # endregion
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
@@ -313,3 +323,6 @@ if SENTRY_DSN:
         # django.contrib.auth) you may enable sending PII data.
         send_default_pii=True
     )
+
+USER_CONFIRMATION_KEY = "user_confirmation_{token}"
+USER_CONFIRMATION_TIMEOUT = 300
