@@ -1,7 +1,14 @@
+import logging
+import secrets
+import string
+import uuid
+
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.core.cache import cache
+from django.shortcuts import redirect, get_object_or_404
 from django.views import View
-from django.views.generic import TemplateView, ListView, UpdateView
+from django.views.generic import TemplateView, ListView, UpdateView, FormView
+from django.utils.translation import gettext_lazy as _
 
 from django.conf import settings
 from rest_framework.reverse import reverse_lazy
@@ -9,8 +16,12 @@ from rest_framework.reverse import reverse_lazy
 from .choices import ClientsStatus
 from .forms import ClientCreationForm
 from .models import Client
-from .services import send_letter
+from .services import send_letter, send_token
 from utils.views import DataMixin, ContextDataMixin
+from ..users.models import User
+
+
+LOG = logging.getLogger(__name__)
 
 
 class ClientsView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
@@ -22,7 +33,7 @@ class ClientsView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         c_def = super().get_default_context_data()
-        c_def['title'] = 'Список клиентов'
+        c_def['title'] = _('Clients')
         c_def['statuses'] = [{'id': val[0], 'val': val[1]} for val in ClientsStatus.CHOICES]
 
         return dict(list(context.items()) + list(c_def.items()))
@@ -47,7 +58,7 @@ class ClientUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
         products = client.products.all()
 
         c_def = super().get_default_context_data()
-        c_def['title'] = 'Клиент'
+        c_def['title'] = _('Client')
         c_def['statuses'] = [{'id': val[0], 'val': val[1]} for val in ClientsStatus.CHOICES]
         c_def['products'] = products
 
@@ -57,26 +68,60 @@ class ClientUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
         return super().post(request, *args, **kwargs)
 
 
-class RegisterViewSet(View):
+class RegisterView(FormView):
+    form_class = ClientCreationForm
     template_name = 'registration.html'
+    success_url = reverse_lazy('clients_requests:list')
 
-    def get(self, request, *args, **kwargs):
-        context = {
-        }
-        return render(request, template_name=self.template_name, context=context)
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        user, created = User.objects.get_or_create(email=email)
+        new_pass = None
 
-    def post(self, request, *args, **kwargs):
-        form = ClientCreationForm(request.POST)
+        form.save()
 
-        if form.is_valid():
-            form.save()
+        if created:
+            alphabet = string.ascii_letters + string.digits
+            new_pass = ''.join(secrets.choice(alphabet) for i in range(8))
+            user.set_password(new_pass)
+            user.save(update_fields=['password', ])
+            if settings.DEBUG:
+                LOG.info(f'Created new user: {user}\n password: {new_pass}\n')
+
+        if new_pass or user.is_active is False:
+            token = uuid.uuid4().hex
+            redis_key = settings.USER_CONFIRMATION_KEY.format(token=token)
+            cache.set(redis_key, {'user_id': user.id}, timeout=settings.USER_CONFIRMATION_TIMEOUT)
+            confirm_link = self.request.build_absolute_uri(
+                reverse_lazy(
+                    'clients:register-confirm', kwargs={'token': token}
+                )
+            )
+            send_token(new_pass, email, confirm_link)
+
+        return super().form_valid(form)
+
+
+class RegisterConfirmView(View):
+
+    def post(self, request, token, *args, **kwargs):
+        redis_key = settings.SOAQAZ_USER_CONFIRMATION_KEY.format(token=token)
+        user_info = cache.get(redis_key) or {}
+
+        if user_id := user_info.get('user_id'):
+            user = get_object_or_404(User, id=user_id)
+            user.is_active = True
+            user.save(update_fields=['is_active'])
             if settings.EMAIL_ADR_REGISTRATION:
-                send_letter(inn=request.POST.get("inn"), name=request.POST.get("name"), phone=request.POST.get("phone"), email=request.POST.get("email"))
-            return redirect('clients:answer')
-
-        context = {
-        }
-        return render(request, template_name=self.template_name, context=context)
+                send_letter(
+                    inn=request.POST.get("inn"),
+                    name=request.POST.get("name"),
+                    phone=request.POST.get("phone"),
+                    email=request.POST.get("email")
+                )
+            return redirect(to=reverse_lazy('clients:answer'))
+        else:
+            return redirect(to=reverse_lazy('clients:register'))
 
 
 class AnswerViewSet(TemplateView):

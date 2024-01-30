@@ -29,8 +29,8 @@ class ClientCreationForm(forms.ModelForm):
 
         existing = Client.objects.filter(~Q(id=self.instance.id), inn=form_inn).exists()
         if existing:
-            raise ValidationError('Такой ИНН уже существует!')
+            raise ValidationError(_('Such INN already exists.'))
 
         if len(form_inn) != 10 and len(form_inn) != 12:
-            raise ValidationError('ИНН указан не полностью!')
+            raise ValidationError(_('INN not fully specified.'))
         return form_inn
