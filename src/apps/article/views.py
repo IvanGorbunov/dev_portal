@@ -11,7 +11,7 @@ from utils.views import ContextDataMixin, DataMixin
 
 
 class ArticleView(LoginRequiredMixin, ContextDataMixin, DataMixin, ListView):
-    queryset = Article.objects.filter(is_delete=False)
+    queryset = Article.objects.filter(is_delete=False).select_related('author', 'product').all()
     context_object_name = 'articles'
     template_name = 'articles/articles_list.html'
 
