@@ -48,7 +48,7 @@ def get_root_categories_selector(*, filters=None) -> QuerySet[Category]:
     )
     qs = qs.filter(**filters)
     qs = qs.filter(p__isnull=True)
-    qs = qs.filter(**filters)
+    qs = qs.select_related('parent')
     qs = qs.with_cte(cte).order_by(
         'depth',
     )
