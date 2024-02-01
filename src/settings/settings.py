@@ -39,6 +39,7 @@ SECRET_KEY = env.str('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', False)
 SQL_DEBUG = env.bool('SQL_DEBUG', False)
+RUN_IN_DOCKER = env.bool('RUN_IN_DOCKER', False)
 
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['*'])
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=['http://localhost'])
@@ -123,6 +124,10 @@ if os.getenv('GITHUB_WORKFLOW'):
             'HOST': 'localhost',
             'PORT': '5432'
         }
+    }
+elif env.str('DATABASE_URL', None):
+    DATABASES = {
+        'default': env.db(var='DATABASE_URL_IN_DOCKER') if RUN_IN_DOCKER else env.db(),
     }
 else:
     DATABASES = {
@@ -267,7 +272,6 @@ REDIS_HOST = env.str('REDIS_HOST', 'redis')
 REDIS_PORT = env.str('REDIS_PORT', '6379')
 REDIS_DB = "0"
 
-RUN_IN_DOCKER = env.bool('RUN_IN_DOCKER', False)
 if not RUN_IN_DOCKER:
     REDIS_HOST = env.str('REDIS_HOST_LOCAL', '6379')
     REDIS_PORT = env.str('REDIS_PORT_LOCAL', '6379')

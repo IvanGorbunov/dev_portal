@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 
 from .choices import ArticleType, ArticleStatus, AccessType, ScoreType
+from ..products.models import Product
 from ..users.models import User
 from utils.models import DateModelMixin, CounterQuerySetMixin, CreateModelMixin
 
@@ -43,7 +44,9 @@ class Article(DateModelMixin, models.Model):
     status = models.CharField(_('Status'), max_length=30, choices=ArticleStatus.CHOICES, default=ArticleStatus.DRAFT)
     access_type = models.CharField(_('Access type'), max_length=30, choices=AccessType.CHOICES, blank=True, null=True)
 
-    author = models.ForeignKey(User, verbose_name=_('Author'), related_name='articles', on_delete=models.PROTECT)
+    author = models.ForeignKey(User, verbose_name=_('Author'), related_name='articles', blank=True, null=True, on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, verbose_name=_('Product'), related_name='articles',
+                                on_delete=models.PROTECT, blank=True, null=True)
 
     objects = ArticleQuerySet.as_manager()
 

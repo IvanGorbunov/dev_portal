@@ -10,6 +10,8 @@ The project is a website designed to facilitate the process of software developm
  - [ ] profile of the developers
  - [ ] chat
  - [ ] wiki for projects
+ - [x] make a separation by selector layer
+ - [x] make a hierarchy of product categories by 'django-cte' 
 
 ---
 ### Installation:
@@ -98,7 +100,7 @@ The project is a website designed to facilitate the process of software developm
 5. Create a superuser:
 
     ```bash
-    python3 manage.py createsuperuser
+    python3 manage.py add_superuser
     ```
 
 6. Collect static files:

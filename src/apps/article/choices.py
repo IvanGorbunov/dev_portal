@@ -65,6 +65,7 @@ class ArticleStatus:
         (REJECTED, _('Rejected')),
         (AGREED, _('Agreed')),
         (PUBLISHED, _('Published')),
+        (ON_REVISION, _('On revision')),
         (ON_ACTUALIZATION, _('On actualisation')),
     )
 
