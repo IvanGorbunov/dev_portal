@@ -13,6 +13,8 @@ import logging
 
 import environ
 import os
+
+from django.utils.crypto import get_random_string
 from django.utils.translation import gettext_lazy as _
 from pathlib import Path
 
@@ -34,7 +36,15 @@ ROOT_DIR = environ.Path(__file__) - 2
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str('SECRET_KEY', '')
+# SECRET_KEY = env.str('SECRET_KEY', '')
+def get_secret_key():
+    if not env.str("SECRET_KEY"):
+        print("[agents_portal] No setting found for SECRET_KEY. Generating a random key...")
+        return get_random_string(length=50)
+    return env.str("SECRET_KEY")
+
+
+SECRET_KEY = get_secret_key()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', False)
