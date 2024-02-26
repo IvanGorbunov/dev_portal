@@ -12,7 +12,7 @@ class NumberValidator(object):
         self.min_digits = min_digits
 
     def validate(self, password, user=None):
-        if not len(re.findall('\d', password)) >= self.min_digits:
+        if not len(re.findall(r'\d', password)) >= self.min_digits:
             raise ValidationError(
                 _("The password must contain at least %(min_digits)d digit(s), 0-9."),
                 code='password_no_number',
@@ -27,7 +27,7 @@ class NumberValidator(object):
 
 class UppercaseValidator(object):
     def validate(self, password, user=None):
-        if not re.findall('[A-Z]', password):
+        if not re.findall(r'[A-Z]', password):
             raise ValidationError(
                 _("The password must contain at least 1 uppercase letter, A-Z."),
                 code='password_no_upper',
@@ -41,7 +41,7 @@ class UppercaseValidator(object):
 
 class LowercaseValidator(object):
     def validate(self, password, user=None):
-        if not re.findall('[a-z]', password):
+        if not re.findall(r'[a-z]', password):
             raise ValidationError(
                 _("The password must contain at least 1 lowercase letter, a-z."),
                 code='password_no_lower',
@@ -55,7 +55,7 @@ class LowercaseValidator(object):
 
 class SymbolValidator(object):
     def validate(self, password, user=None):
-        if not re.findall('[()[\]{}|\\`~!@#$%^&*_\-+=;:\'",<>./?]', password):
+        if not re.findall(r'[()[\]{}|\\`~!@#$%^&*_\-+=;:\'",<>./?]', password):
             raise ValidationError(
                 _("The password must contain at least 1 symbol: " +
                   "()[]{}|\`~!@#$%^&*_-+=;:'\",<>./?"),
