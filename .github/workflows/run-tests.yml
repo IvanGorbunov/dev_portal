@@ -93,6 +93,7 @@ jobs:
           echo SQL_DATABASE=${{ env.POSTGRES_DB }} >> ./src/settings/.env
           echo SQL_PORT=${{ env.POSTGRES_PORT }} >> ./src/settings/.env
           echo SENTRY_DSN=${{ secrets.SENTRY_DSN }} >> ./src/settings/.env
+          echo CELERY_ACCEPT_CONTENT=application/json >> ./src/settings/.env
           cd src/
           poetry run python manage.py test apps/
 #          python manage.py test apps/ functional_tests
