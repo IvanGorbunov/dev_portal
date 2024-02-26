@@ -295,11 +295,10 @@ CACHES = {
 # endregion
 
 # region Celery
-BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'  #env.str('CELERY_BROKER_URL')
-CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'  # env.str('CELERY_BROKER_URL', 'redis://redis:6379/0')
+BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 CELERY_CACHE_BACKEND = 'default'
-# CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'   # env.str('CELERY_RESULT_BACKEND', 'redis://redis:6379/0')
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_ACCEPT_CONTENT = env.list('CELERY_ACCEPT_CONTENT')
 CELERY_TASK_SERIALIZER = env.str('CELERY_TASK_SERIALIZER', '')
