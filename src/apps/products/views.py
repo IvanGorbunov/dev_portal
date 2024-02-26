@@ -79,4 +79,3 @@ class CategoryUpdateView(LoginRequiredMixin, ContextDataMixin, UpdateView):
         if request.user.is_role_client():
             return render(request, 'not_allowed.html')
         return super().post(request, *args, **kwargs)
-

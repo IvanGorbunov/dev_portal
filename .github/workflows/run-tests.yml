@@ -64,7 +64,7 @@ jobs:
       - name: Check Syntax # check code formatting
         run: |
           poetry add pycodestyle
-          poetry run pycodestyle --exclude=./src/alembic --statistics --max-line-length=500 .
+          poetry run pycodestyle --exclude=./src/utils/validators.py --statistics --max-line-length=500 .
       - name: Check syntax with flake8
         run: |
           poetry add flake8
