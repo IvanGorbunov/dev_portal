@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.12
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -8,9 +8,13 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /clients_portal
 
 # install dependences
-COPY ../../requirements.txt /clients_portal/requirements.txt
 RUN python3 -m pip install --upgrade pip
-RUN pip3 install -r /clients_portal/requirements.txt
+RUN pip install poetry
+RUN poetry self update
+
+COPY pyproject.toml /clients_portal/pyproject.toml
+RUN poetry config virtualenvs.create false \
+    && poetry install --no-interaction --no-ansi
 
 ## install google chrome
 #RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
