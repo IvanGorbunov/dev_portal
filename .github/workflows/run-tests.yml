@@ -55,13 +55,24 @@ jobs:
         run: python --version
       - name: Upgrade Pip # check and upgrade Pip
         run: python -m pip install --upgrade pip
-      - name: Install requirements # install application requirements
-        run: pip install -r requirements.txt
+      - name: Install Poetry # install Poetry
+        run: |
+          pip install poetry
+          poetry self update
+      - name: Install dependencies # install application dependencies
+        run: poetry install
       - name: Check Syntax # check code formatting
         run: |
-          pip install pycodestyle
-          pycodestyle --statistics --max-line-length=500 .
-
+          poetry add pycodestyle
+          poetry run pycodestyle --exclude=./src/alembic --statistics --max-line-length=500 .
+      - name: Check syntax with flake8
+        run: |
+          poetry add flake8
+          poetry run flake8
+#      - name: Check syntax with Mypy # run Mypy
+#        run: poetry run mypy ./src
+#      - name: Check syntax with pylint # run pylint
+#        run: poetry run pylint ./src/
       - name: Checking hierarchy
         run: |
           sudo apt install tree
@@ -83,5 +94,5 @@ jobs:
           echo SQL_PORT=${{ env.POSTGRES_PORT }} >> ./src/settings/.env
           echo SENTRY_DSN=${{ secrets.SENTRY_DSN }} >> ./src/settings/.env
           cd src/
+          poetry run python manage.py test apps/
 #          python manage.py test apps/ functional_tests
-          python manage.py test apps/
